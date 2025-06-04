@@ -20,10 +20,10 @@ class AdminUserSeeder extends Seeder
 
         if ($adminRole) {
             // Cek apakah user admin sudah ada
-            if (User::where('email', 'admin@pangkalan_komputer.id')->count() == 0) {
+            if (User::where('email', 'admin@pk.id')->count() == 0) {
                 User::create([
                     'name' => 'Irham Fauzan',
-                    'email' => 'admin@pangkalan_komputer.id',
+                    'email' => 'admin@pk.id',
                     'password' => Hash::make('pekaydi1'),
                     'role_id' => $adminRole->id,
                     'phone_number' => '083192310040', // Opsional
