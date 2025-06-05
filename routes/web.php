@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ServiceOrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\TrackingController;
@@ -65,6 +67,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         // Rute admin lainnya nanti di sini
         Route::post('/service-orders/{serviceOrder}/updates', [ServiceOrderController::class, 'storeUpdate'])
         ->name('service-orders.updates.store');
+
+        Route::resource('reviews', ReviewController::class)->except(['create', 'store']);
+        Route::resource('complaints', ComplaintController::class)->except(['create', 'store']); 
     });
 
     // Rute untuk Teknisi (contoh)
@@ -90,6 +95,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::post('/service-orders/{serviceOrder}/reviews', [PelangganDashboardController::class, 'storeReview'])
              ->name('service-orders.reviews.store'); 
+        
+        Route::get('/service-orders/{serviceOrder}/complaints/create', [PelangganDashboardController::class, 'createComplaint'])
+             ->name('service-orders.complaints.create');
+        
+        Route::post('/service-orders/{serviceOrder}/complaints', [PelangganDashboardController::class, 'storeComplaint'])
+             ->name('service-orders.complaints.store');     
+
+        // Rute baru untuk pelanggan melihat daftar komplain mereka
+        Route::get('/komplain-saya', [PelangganDashboardController::class, 'listComplaints'])
+             ->name('complaints.index'); // Nama rutenya menjadi pelanggan.complaints.index
     });
 });
 

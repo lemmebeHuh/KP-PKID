@@ -40,6 +40,12 @@
                         :active="request()->routeIs('admin.service-orders.*')">
                         {{ __('Order Servis') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.index')">
+                        {{ __('Ulasan Pelanggan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.complaints.index')" :active="request()->routeIs('admin.complaints.*')">
+                        {{ __('Komplain Pelanggan') }}
+                    </x-nav-link>
                 </div>
                 @endif
 
@@ -48,6 +54,9 @@
                     <x-nav-link :href="route('pelanggan.dashboard')"
                         :active="request()->routeIs('pelanggan.dashboard')">
                         {{ __('Dashboard Saya') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pelanggan.complaints.index')" :active="request()->routeIs('pelanggan.complaints.index')">
+                        {{ __('Komplain Saya') }}
                     </x-nav-link>
                     {{-- Tambahkan link navigasi pelanggan lainnya di sini --}}
                 </div>

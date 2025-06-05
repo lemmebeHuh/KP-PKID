@@ -228,7 +228,15 @@
                     {{-- Tombol Beri Review (Nanti) --}}
                     <a href="#"
                         class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded text-sm">Beri
-                        Ulasan</a>
+                        Ulasan
+                    </a>
+
+                    {{-- Tombol/Link Ajukan Komplain --}}
+                    <a href="{{ route('pelanggan.service-orders.complaints.create', $serviceOrder->id) }}" {{-- Rute ini
+                        akan kita buat --}}
+                        class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded text-sm">
+                        Ajukan Komplain
+                    </a>
                 </div>
                 @endif
 

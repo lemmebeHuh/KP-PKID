@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pelanggan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Complaint;
 use App\Models\Review;
 use Illuminate\Http\Request; // Menggunakan Request standar untuk validasi sederhana
 use Illuminate\Support\Facades\Auth;
@@ -192,4 +193,59 @@ class DashboardController extends Controller
                          ->with('success', 'Terima kasih! Ulasan Anda telah berhasil disimpan.');
     }
 
+    public function createComplaint(ServiceOrder $serviceOrder)
+    {
+        // Autorisasi: Pastikan order ini milik pelanggan yang sedang login
+        if ($serviceOrder->customer_id !== Auth::id()) {
+            abort(403, 'AKSI TIDAK DIIZINKAN.');
+        }
+
+        // Validasi: Hanya boleh komplain jika status Completed atau Picked Up (sesuai kebutuhan)
+        if (!in_array($serviceOrder->status, ['Completed', 'Picked Up'])) {
+            return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
+                             ->with('error', 'Anda hanya bisa mengajukan komplain untuk servis yang sudah selesai.');
+        }
+
+        return view('pelanggan.complaints.create', compact('serviceOrder'));
+    }
+
+    public function storeComplaint(Request $request, ServiceOrder $serviceOrder)
+    {
+        // Autorisasi: Pastikan order ini milik pelanggan yang sedang login
+        if ($serviceOrder->customer_id !== Auth::id()) {
+            abort(403, 'AKSI TIDAK DIIZINKAN.');
+        }
+
+        // Validasi: Hanya boleh komplain jika status Completed atau Picked Up
+        if (!in_array($serviceOrder->status, ['Completed', 'Picked Up'])) {
+             return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
+                             ->with('error', 'Anda hanya bisa mengajukan komplain untuk servis yang sudah selesai.');
+        }
+
+        $validated = $request->validate([
+            'subject' => 'required|string|max:255',
+            'description' => 'required|string|max:2000', // Batasi panjang deskripsi
+        ]);
+
+        Complaint::create([
+            'service_order_id' => $serviceOrder->id,
+            'customer_id' => Auth::id(),
+            'subject' => $validated['subject'],
+            'description' => $validated['description'],
+            'status' => 'Open', // Status awal komplain
+        ]);
+
+        return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
+                         ->with('success', 'Komplain Anda telah berhasil dikirim. Kami akan segera menindaklanjutinya.');
+    }
+
+    public function listComplaints()
+    {
+        $complaints = Complaint::where('customer_id', Auth::id())
+                            ->with('serviceOrder') // Eager load service order terkait (jika ada)
+                            ->latest() // Urutkan dari terbaru
+                            ->paginate(10);
+
+        return view('pelanggan.complaints.index', compact('complaints'));
+    }
 }
