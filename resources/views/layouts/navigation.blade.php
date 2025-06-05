@@ -43,6 +43,16 @@
                 </div>
                 @endif
 
+                @if(Auth::check() && Auth::user()->role && Auth::user()->role->name === 'Pelanggan')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('pelanggan.dashboard')"
+                        :active="request()->routeIs('pelanggan.dashboard')">
+                        {{ __('Dashboard Saya') }}
+                    </x-nav-link>
+                    {{-- Tambahkan link navigasi pelanggan lainnya di sini --}}
+                </div>
+                @endif
+
                 @if(Auth::check() && Auth::user()->role && Auth::user()->role->name === 'Teknisi')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('teknisi.dashboard')" :active="request()->routeIs('teknisi.dashboard')">

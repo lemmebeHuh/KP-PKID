@@ -81,6 +81,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware(['role.protect:Pelanggan'])->prefix('pelanggan')->name('pelanggan.')->group(function () {
         Route::get('/dashboard', [PelangganDashboardController::class, 'index'])->name('dashboard');
         // Rute pelanggan lainnya nanti di sini
+        Route::get('/service-orders/{serviceOrder}', [PelangganDashboardController::class, 'showServiceOrderDetail'])
+             ->name('service-orders.show');
+        Route::post('/service-orders/{serviceOrder}/respond-quotation', [PelangganDashboardController::class, 'respondToQuotation'])
+             ->name('service-orders.respond-quotation'); 
+         Route::get('/service-orders/{serviceOrder}/download-pdf', [PelangganDashboardController::class, 'downloadServiceOrderPdf'])
+             ->name('service-orders.download-pdf');
     });
 });
 
