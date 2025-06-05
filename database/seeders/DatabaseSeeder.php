@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesTableSeeder::class,
             AdminUserSeeder::class,
-            // Anda bisa tambahkan seeder lain di sini nanti, misalnya:
-            // CategoriesTableSeeder::class,
-            // ProductsTableSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            ServiceSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }

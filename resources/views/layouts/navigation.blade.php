@@ -43,9 +43,15 @@
                     <x-nav-link :href="route('admin.reviews.index')" :active="request()->routeIs('admin.reviews.index')">
                         {{ __('Ulasan Pelanggan') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('admin.complaints.index')" :active="request()->routeIs('admin.complaints.*')">
                         {{ __('Komplain Pelanggan') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('articles.index-public')" :active="request()->routeIs('articles*')">
+                        {{ __('Artikel') }}
+                    </x-nav-link>
+                    {{-- <a href="{{ route('articles.index-public') }}" class="text-gray-700 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Artikel</a> --}}
                 </div>
                 @endif
 

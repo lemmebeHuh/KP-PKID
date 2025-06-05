@@ -13,7 +13,10 @@ use App\Http\Controllers\Admin\ComplaintController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ServiceOrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ProductCatalogController;
+use App\Http\Controllers\ServiceCatalogController;
 use App\Http\Controllers\TrackingController;
+use App\Http\Controllers\ArticleController as PublicArticleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +30,13 @@ Route::get('/dashboard', function () {
 Route::get('/lacak-servis', [TrackingController::class, 'showTrackingForm'])->name('tracking.form');
 Route::get('/lacak-servis/hasil', [TrackingController::class, 'trackService'])->name('tracking.result'); // Kita akan gunakan GET dengan query parameter
 
+Route::get('/produk', [ProductCatalogController::class, 'index'])->name('products.catalog');
+Route::get('/produk/{product:slug}', [ProductCatalogController::class, 'show'])->name('products.show-public');
+
+Route::get('/layanan-kami', [ServiceCatalogController::class, 'index'])->name('services.catalog');
+
+Route::get('/artikel', [PublicArticleController::class, 'index'])->name('articles.index-public');
+Route::get('/artikel/{article:slug}', [PublicArticleController::class, 'show'])->name('articles.show-public');
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
