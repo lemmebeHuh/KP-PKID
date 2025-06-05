@@ -227,6 +227,29 @@ class ServiceOrderController extends Controller
         //         'status_to' => $serviceOrder->status,
         //     ]);
         // }
+        // Logika untuk membuat atau mengupdate Garansi
+        // Pastikan field warranty_start_date, warranty_end_date, warranty_terms ada di $fillable model Warranty jika belum
+        // dan juga divalidasi di UpdateServiceOrderRequest jika diperlukan (misal, end_date > start_date)
+
+        // Tambahkan validasi untuk field garansi di UpdateServiceOrderRequest jika belum
+        // 'warranty_start_date' => 'nullable|date',
+        // 'warranty_end_date' => 'nullable|date|after_or_equal:warranty_start_date',
+        // 'warranty_terms' => 'nullable|string',
+
+        if ($request->filled('warranty_start_date') && $request->filled('warranty_end_date')) {
+            $serviceOrder->warranty()->updateOrCreate(
+                ['service_order_id' => $serviceOrder->id], // Kunci untuk mencari atau membuat
+                [
+                    'start_date' => $request->input('warranty_start_date'),
+                    'end_date' => $request->input('warranty_end_date'),
+                    'terms' => $request->input('warranty_terms'),
+                ]
+            );
+        } elseif ($serviceOrder->warranty && (!$request->filled('warranty_start_date') || !$request->filled('warranty_end_date')) ) {
+            // Jika salah satu atau kedua field tanggal garansi dikosongkan dan sebelumnya ada garansi, hapus garansi.
+            // Ini adalah satu cara, Anda bisa juga hanya mengupdate jika semua field diisi.
+            $serviceOrder->warranty->delete();
+        }
 
 
         return redirect()->route('admin.service-orders.index')

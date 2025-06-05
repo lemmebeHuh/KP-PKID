@@ -155,7 +155,43 @@
 
                 {{-- Informasi Garansi jika ada (Sama seperti halaman publik/admin show) --}}
                 @if($serviceOrder->warranty)
-                {{-- ... kode garansi ... --}}
+                <section class="mt-6 pt-6 border-t">
+                    <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Informasi Garansi Servis</h3>
+                    <div class="text-sm space-y-1">
+                        <p><strong>Masa Berlaku Garansi:</strong>
+                            {{ $serviceOrder->warranty->start_date ?
+                            \Carbon\Carbon::parse($serviceOrder->warranty->start_date)->translatedFormat('d F Y') :
+                            'N/A' }}
+                            s/d
+                            {{ $serviceOrder->warranty->end_date ?
+                            \Carbon\Carbon::parse($serviceOrder->warranty->end_date)->translatedFormat('d F Y') : 'N/A'
+                            }}
+                        </p>
+                        @if($serviceOrder->warranty->terms)
+                        <div>
+                            <p class="font-medium">Syarat & Ketentuan Garansi:</p>
+                            <p class="whitespace-pre-wrap text-gray-600 bg-gray-50 p-3 rounded-md mt-1">{{
+                                $serviceOrder->warranty->terms }}</p>
+                        </div>
+                        @endif
+                        {{-- Anda bisa tambahkan info lain jika ada, misal status garansi (Aktif/Kedaluwarsa)
+                        berdasarkan tanggal hari ini --}}
+                        @if($serviceOrder->warranty->end_date &&
+                        \Carbon\Carbon::now()->gt(\Carbon\Carbon::parse($serviceOrder->warranty->end_date)))
+                        <p class="text-red-600 font-semibold">Status Garansi: Sudah Kedaluwarsa</p>
+                        @elseif($serviceOrder->warranty->start_date &&
+                        \Carbon\Carbon::now()->lte(\Carbon\Carbon::parse($serviceOrder->warranty->end_date)))
+                        <p class="text-green-600 font-semibold">Status Garansi: Aktif</p>
+                        @endif
+                    </div>
+                </section>
+                @elseif(in_array($serviceOrder->status, ['Completed', 'Picked Up']))
+                {{-- Tampilkan pesan jika servis selesai tapi belum ada info garansi --}}
+                <section class="mt-6 pt-6 border-t">
+                    <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Informasi Garansi Servis</h3>
+                    <p class="text-sm text-gray-500">Tidak ada informasi garansi khusus yang tercatat untuk servis ini.
+                    </p>
+                </section>
                 @endif
 
                 @if(in_array($serviceOrder->status, ['Completed', 'Picked Up']))

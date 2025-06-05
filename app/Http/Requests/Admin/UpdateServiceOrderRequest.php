@@ -26,6 +26,9 @@ class UpdateServiceOrderRequest extends FormRequest
             'quotation_details' => 'nullable|string',
             'customer_approval_status' => 'nullable|string|max:100',
             'final_cost' => 'nullable|numeric|min:0',
+            'warranty_start_date' => 'nullable|date_format:Y-m-d',
+            'warranty_end_date' => 'nullable|date_format:Y-m-d|after_or_equal:warranty_start_date',
+            'warranty_terms' => 'nullable|string|max:1000',
             // date_completed dan date_picked_up akan diisi berdasarkan logika status
         ];
     }
