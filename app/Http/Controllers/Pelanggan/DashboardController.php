@@ -152,4 +152,44 @@ class DashboardController extends Controller
         // Atau jika ingin ditampilkan di browser dulu (inline):
         // return $pdf->stream($fileName);
     }
+
+    public function storeReview(Request $request, ServiceOrder $serviceOrder)
+    {
+        // Autorisasi: Pastikan order ini milik pelanggan yang sedang login
+        if ($serviceOrder->customer_id !== Auth::id()) {
+            abort(403, 'AKSI TIDAK DIIZINKAN.');
+        }
+
+        // Validasi: Hanya boleh review jika status Completed atau Picked Up
+        if (!in_array($serviceOrder->status, ['Completed', 'Picked Up'])) {
+            return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
+                             ->with('error', 'Anda hanya bisa memberi ulasan untuk servis yang sudah selesai.');
+        }
+
+        // Validasi: Pastikan pelanggan belum pernah mereview order ini
+        $existingReview = Review::where('service_order_id', $serviceOrder->id)
+                                ->where('customer_id', Auth::id())
+                                ->first();
+        if ($existingReview) {
+            return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
+                             ->with('error', 'Anda sudah pernah memberikan ulasan untuk order servis ini.');
+        }
+
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ]);
+
+        Review::create([
+            'service_order_id' => $serviceOrder->id,
+            'customer_id' => Auth::id(),
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+            'is_approved' => true, // Langsung approve, atau set false jika perlu moderasi Admin
+        ]);
+
+        return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
+                         ->with('success', 'Terima kasih! Ulasan Anda telah berhasil disimpan.');
+    }
+
 }

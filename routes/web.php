@@ -87,6 +87,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
              ->name('service-orders.respond-quotation'); 
          Route::get('/service-orders/{serviceOrder}/download-pdf', [PelangganDashboardController::class, 'downloadServiceOrderPdf'])
              ->name('service-orders.download-pdf');
+
+        Route::post('/service-orders/{serviceOrder}/reviews', [PelangganDashboardController::class, 'storeReview'])
+             ->name('service-orders.reviews.store'); 
     });
 });
 

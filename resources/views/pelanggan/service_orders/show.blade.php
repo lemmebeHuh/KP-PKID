@@ -158,6 +158,64 @@
                 {{-- ... kode garansi ... --}}
                 @endif
 
+                @if(in_array($serviceOrder->status, ['Completed', 'Picked Up']))
+                <section class="mt-6 pt-6 border-t">
+                    <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Ulasan & Rating Anda</h3>
+                    @if($existingReview)
+                    <div class="p-4 bg-green-50 border border-green-300 rounded-md text-sm">
+                        <p class="font-semibold">Anda sudah memberikan ulasan untuk servis ini pada {{
+                            $existingReview->created_at->format('d M Y') }}:</p>
+                        <div class="mt-1">
+                            <strong>Rating:</strong>
+                            @for($i = 1; $i <= 5; $i++) <span
+                                class="{{ $i <= $existingReview->rating ? 'text-yellow-400' : 'text-gray-300' }}">
+                                &#9733;</span> {{-- Bintang --}}
+                                @endfor
+                                ({{ $existingReview->rating }}/5)
+                        </div>
+                        @if($existingReview->comment)
+                        <p class="mt-1"><strong>Komentar:</strong></p>
+                        <p class="whitespace-pre-wrap text-gray-600">{{ $existingReview->comment }}</p>
+                        @endif
+                    </div>
+                    @else
+                    <form action="{{ route('pelanggan.service-orders.reviews.store', $serviceOrder->id) }}"
+                        method="POST"> {{-- Rute ini akan kita buat --}}
+                        @csrf
+                        <div class="mb-4">
+                            <label for="rating" class="block text-sm font-medium text-gray-700">Rating (1-5
+                                Bintang)</label>
+                            <select name="rating" id="rating" class="mt-1 block w-full sm:w-1/3" required>
+                                <option value="">Pilih Rating</option>
+                                <option value="5" {{ old('rating')==5 ? 'selected' : '' }}>★★★★★ (Sangat Puas)</option>
+                                <option value="4" {{ old('rating')==4 ? 'selected' : '' }}>★★★★☆ (Puas)</option>
+                                <option value="3" {{ old('rating')==3 ? 'selected' : '' }}>★★★☆☆ (Cukup)</option>
+                                <option value="2" {{ old('rating')==2 ? 'selected' : '' }}>★★☆☆☆ (Kurang Puas)</option>
+                                <option value="1" {{ old('rating')==1 ? 'selected' : '' }}>★☆☆☆☆ (Sangat Tidak Puas)
+                                </option>
+                            </select>
+                            @error('rating') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="comment" class="block text-sm font-medium text-gray-700">Komentar Ulasan
+                                (Opsional)</label>
+                            <textarea name="comment" id="comment" rows="4"
+                                class="mt-1 block w-full">{{ old('comment') }}</textarea>
+                            @error('comment') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <button type="submit"
+                                class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
+                                Kirim Ulasan
+                            </button>
+                        </div>
+                    </form>
+                    @endif
+                </section>
+                @endif
+
                 {{-- Tombol Aksi Lain untuk Pelanggan (Download PDF, Review - NANTI) --}}
                 @if($serviceOrder->status == 'Completed' || $serviceOrder->status == 'Picked Up')
                 <div class="mt-6 pt-4 border-t">
