@@ -1,0 +1,55 @@
+1. Penerimaan Order Servis Baru:
+
+- ini sudah pernah dibahas, jd aku harap kamu ga lupa.
+
+- generate nomer servis order otomatis.
+
+- ada di website ketika pelanggan sudah login, dan selain itu nantinya aku mau cetak di kertas kecil seukuran karcis parkir yang berisikan data service order number, qrcode dan data penting dalam penyervisan, namun tidak banyak.
+
+- admin bisa langsung atau tidak langsung menugaskan teknisi.
+
+
+
+2. proses diagnosa awal:
+
+-  Melakukan diagnosa.
+
+- Deskripsi kerusakan lebih detail, estimasi biaya jika sudah ada, estimasi waktu pengerjaan awal.
+
+- bagusnya bagaimana? untuk biaya kan pelanggan bisa lihat estimasinya terlebih dahulu di website jasa servisnya.
+
+
+
+3. Pengerjaan servis:
+
+- tugas servis yg baru akan muncul di dashboard, namun sebelum itu admin sudah menginfokan secara langsung klo ada barang yg harus diservis olehnya.
+
+- aku ikut saranmu aja!.
+
+- teknisi upload bukti foto kondisi awal terkait problem barangnya, misalnya yang diservis itu keyboard laptop, maka foto kondisi awal keyboardnya. lalu jika sedang repair terlihat problem utamanya, foto kembali jika memungkinkan. dan setelah barang diperbaiki, foto kembali. pokoknya klo km ada saran yg lebih baik implementasikan aja ya!.
+
+- aku ikut saranmu untuk catatan pengerjaan oleh teknisi!.
+
+ 
+
+4. Servis selesai:
+
+- aku ikut saranmu.
+
+- kamu atur ya, baiknya seperti apa!
+
+
+
+5. Melihat Progres Servis:
+
+- ini sudah kita bicarakan! via input nomor servis atau login untuk lihat servis.
+
+- ini sudah kita bicarakan juga! Sesuai dengan update dari Admin/Teknisi, termasuk foto/video.
+
+
+
+6. Setelah servis selesai:
+
+- pelanggan bisa lihat status servisan yg telah selesai di dasboard, atau rencana nya sih setelah servis selesai tuh otomatis kirim whatsapp ke pengguna terkait barang yg diservis.
+
+- Download bukti PDF, memberikan review & rating, melihat info garansi, mengajukan komplain

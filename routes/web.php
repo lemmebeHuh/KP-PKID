@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\ServiceOrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\TrackingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +20,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'role.redirect'])->name('dashboard');
+
+// Rute untuk Halaman Pelacakan Servis Publik
+Route::get('/lacak-servis', [TrackingController::class, 'showTrackingForm'])->name('tracking.form');
+Route::get('/lacak-servis/hasil', [TrackingController::class, 'trackService'])->name('tracking.result'); // Kita akan gunakan GET dengan query parameter
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -55,14 +61,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('services', ServiceController::class);
         Route::resource('articles', ArticleController::class);
         Route::resource('users', UserController::class);
+        Route::resource('service-orders', ServiceOrderController::class);
         // Rute admin lainnya nanti di sini
+        Route::post('/service-orders/{serviceOrder}/updates', [ServiceOrderController::class, 'storeUpdate'])
+        ->name('service-orders.updates.store');
     });
 
     // Rute untuk Teknisi (contoh)
     Route::middleware(['role.protect:Teknisi'])->prefix('teknisi')->name('teknisi.')->group(function () {
         Route::get('/dashboard', [TeknisiDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/service-orders/{serviceOrder}', [TeknisiDashboardController::class, 'show'])->name('service-orders.show');
         // Rute teknisi lainnya nanti di sini
+        Route::post('/service-orders/{serviceOrder}/updates', [TeknisiDashboardController::class, 'storeServiceUpdate'])
+             ->name('service-orders.updates.store'); 
     });
+    
 
     // Rute untuk Pelanggan (contoh)
     Route::middleware(['role.protect:Pelanggan'])->prefix('pelanggan')->name('pelanggan.')->group(function () {
