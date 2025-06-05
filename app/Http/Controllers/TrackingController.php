@@ -97,7 +97,7 @@ class TrackingController extends Controller
         if (empty($name)) return 'Pelanggan';
         $parts = explode(' ', $name);
         if (count($parts) > 1) {
-            return $parts[0] . ' ' . strtoupper(substr($parts[count($parts)-1], 0, 1)) . '.'; // John D.
+            return $parts[0] . ' ' . strtoupper(substr($parts[count($parts)-1], 0, 1)) . '.';
         }
         return $name; // Jika hanya satu kata
     }
