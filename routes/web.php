@@ -17,6 +17,8 @@ use App\Http\Controllers\ProductCatalogController;
 use App\Http\Controllers\ServiceCatalogController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ArticleController as PublicArticleController;
+use App\Http\Controllers\PageController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +39,13 @@ Route::get('/layanan-kami', [ServiceCatalogController::class, 'index'])->name('s
 
 Route::get('/artikel', [PublicArticleController::class, 'index'])->name('articles.index-public');
 Route::get('/artikel/{article:slug}', [PublicArticleController::class, 'show'])->name('articles.show-public');
+
+Route::get('/tentang-kami', [PageController::class, 'about'])->name('about');
+
+Route::get('/kontak-kami', [PageController::class, 'contact'])->name('contact');
+Route::post('/kontak-kami/kirim', [PageController::class, 'sendContactMessage'])->name('contact.send');
+
+
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 //     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -136,8 +136,8 @@ class DashboardController extends Controller
             'title' => 'Bukti Servis - ' . $serviceOrder->service_order_number,
             // Anda bisa tambahkan data lain jika perlu, misal info perusahaan
             'company_name' => 'Pangkalan Komputer ID',
-            'company_address' => 'Jl. Contoh Alamat No. 123, Bandung', // Ganti dengan alamat asli
-            'company_phone' => '0812-3456-7890', // Ganti dengan no telp asli
+            'company_address' => 'Jl. Sersan Sodik No.57 RT03, RW.2, Gg. Kelinci VI, Kec. Sukasari, Kota Bandung, Jawa Barat', // Ganti dengan alamat asli
+            'company_phone' => '0895-4157-18458', // Ganti dengan no telp asli
         ];
 
         // Buat nama file PDF

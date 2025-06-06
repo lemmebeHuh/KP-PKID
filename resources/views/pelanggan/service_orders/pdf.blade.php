@@ -26,7 +26,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ public_path('images/logo_pangkalan_komputer.png') }}" alt="Logo" style="max-height: 60px; margin-bottom:10px;">
+            <img src="{{ public_path('images/pkid-logo.png') }}" alt="Logo" style="max-height: 60px; margin-bottom:10px;">
             <h1>{{ $company_name ?? 'Pangkalan Komputer ID' }}</h1>
             <p>{{ $company_address ?? 'Alamat Perusahaan' }}</p>
             <p>Telp: {{ $company_phone ?? 'Nomor Telepon' }}</p>
