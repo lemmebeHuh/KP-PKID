@@ -11,37 +11,70 @@ class ProductCatalogController extends Controller
     /**
      * Menampilkan halaman katalog produk publik.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil produk yang aktif (jika ada kolom 'is_active' di tabel products, jika tidak, ambil semua)
-        // Eager load relasi 'category' untuk menampilkan nama kategori
-        $products = Product::with('category')
-                            ->latest() // Urutkan dari terbaru
-                            ->paginate(12); // Tampilkan 12 produk per halaman (bisa disesuaikan)
+        $productCategories = Category::where('type', 'product')->has('products')->orderBy('name')->get();
+        $selectedCategorySlug = $request->input('kategori');
+        $selectedCategory = null;
 
-        // Ambil kategori produk untuk filter (opsional, bisa ditambahkan nanti)
-        // $productCategories = Category::where('type', 'product')->has('products')->orderBy('name')->get();
+        // Memulai query dasar
+        $productsQuery = Product::with('category');
+
+        // Filter berdasarkan Kategori
+        if ($selectedCategorySlug) {
+            $selectedCategory = Category::where('slug', $selectedCategorySlug)->firstOrFail();
+            $productsQuery->where('category_id', $selectedCategory->id);
+        }
+
+        // Filter berdasarkan Pencarian
+        if ($request->has('search') && !empty($request->input('search'))) {
+            $searchTerm = $request->input('search');
+            $productsQuery->where(function($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('description', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // LOGIKA SORTING BARU
+        $sortOption = $request->input('sort', 'latest'); // Default ke 'latest' jika tidak ada input
+        switch ($sortOption) {
+            case 'price_asc':
+                $productsQuery->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $productsQuery->orderBy('price', 'desc');
+                break;
+            default: // 'latest'
+                $productsQuery->latest(); // Sama dengan orderBy('created_at', 'desc')
+                break;
+        }
+
+        $products = $productsQuery->paginate(12);
+
+        // Menambahkan semua query string ke link paginasi
+        $products->appends($request->all());
 
         return view('public.products.catalog', [
             'products' => $products,
-            // 'productCategories' => $productCategories, // Kirim jika Anda membuat filter kategori
+            'productCategories' => $productCategories,
+            'selectedCategory' => $selectedCategory,
         ]);
     }
 
-    public function show(Product $product) // Route model binding dengan slug
+    public function show(Product $product)
     {
-        // Eager load kategori jika belum otomatis ter-load atau ingin memastikan
-        $product->load('category'); 
+        $product->load('category');
 
-        // Anda bisa menambahkan logika untuk mengambil produk terkait atau rekomendasi nanti
-        // $relatedProducts = Product::where('category_id', $product->category_id)
-        //                             ->where('id', '!=', $product->id)
-        //                             ->take(4)
-        //                             ->get();
+        // Ambil 4 produk terkait dari kategori yang sama, kecuali produk ini sendiri
+        $relatedProducts = Product::where('category_id', $product->category_id)
+                                 ->where('id', '!=', $product->id)
+                                 ->inRandomOrder() // Ambil acak
+                                 ->take(4)
+                                 ->get();
 
         return view('public.products.show', [
             'product' => $product,
-            // 'relatedProducts' => $relatedProducts,
+            'relatedProducts' => $relatedProducts, // Kirim data produk terkait ke view
         ]);
     }
 }

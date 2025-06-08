@@ -20,9 +20,11 @@ use App\Http\Controllers\ArticleController as PublicArticleController;
 use App\Http\Controllers\PageController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [PageController::class, 'home'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

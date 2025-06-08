@@ -26,5 +26,7 @@
     {{-- Scripts di akhir body --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script> --}}
     @stack('scripts') {{-- Untuk script spesifik per halaman --}}
+    {{-- Tambahkan Alpine.js jika belum ada di dalam app.js Anda --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>

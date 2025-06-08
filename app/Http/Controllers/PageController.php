@@ -2,12 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail; // <-- IMPORT Mail facade
+use App\Models\Service;
+use App\Models\Article;
 
 
 class PageController extends Controller
 {
+    public function home()
+    {
+        // Ambil 4 produk terbaru
+        $latestProducts = Product::with('category')->latest()->take(4)->get();
+
+        // Ambil 3 layanan unggulan (bisa Anda buat logic 'is_featured' nanti, untuk sekarang ambil acak/terbaru)
+        $featuredServices = Service::inRandomOrder()->take(3)->get();
+
+        // Ambil 3 artikel terbaru yang sudah di-publish
+        $latestArticles = Article::where('status', 'published')
+                                 ->with('category')
+                                 ->latest('published_at')
+                                 ->take(3)
+                                 ->get();
+
+        return view('public.pages.home', compact(
+            'latestProducts',
+            'featuredServices',
+            'latestArticles'
+        ));
+    }
     /**
      * Menampilkan halaman "Tentang Kami".
      */

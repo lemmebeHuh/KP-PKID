@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 font-sans">
-    @include('layouts.navigation')
+    @include('layouts.partials.public-navigation')
 
     <div class="container mx-auto mt-6 p-4">
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
@@ -57,6 +57,6 @@
         @endif
     </div>
 
-    {{-- @include('layouts.public-footer') --}}
+    @include('layouts.partials.public-footer')
 </body>
 </html>

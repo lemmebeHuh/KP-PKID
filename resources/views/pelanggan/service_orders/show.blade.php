@@ -10,9 +10,9 @@
         </div>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            @if (session('success'))
+            {{-- @if (session('success'))
             <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                 {{ session('success') }}
             </div>
@@ -21,7 +21,7 @@
             <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
                 {{ session('error') }}
             </div>
-            @endif
+            @endif --}}
 
             <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg space-y-6">
                 {{-- Informasi Utama Order (Sama seperti halaman publik/admin show, bisa disesuaikan) --}}
@@ -262,10 +262,10 @@
                         Download Bukti Servis (PDF)
                     </a>
                     {{-- Tombol Beri Review (Nanti) --}}
-                    <a href="#"
+                    {{-- <a href="#"
                         class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded text-sm">Beri
                         Ulasan
-                    </a>
+                    </a> --}}
 
                     {{-- Tombol/Link Ajukan Komplain --}}
                     <a href="{{ route('pelanggan.service-orders.complaints.create', $serviceOrder->id) }}" {{-- Rute ini
