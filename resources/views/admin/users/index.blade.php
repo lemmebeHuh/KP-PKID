@@ -21,18 +21,20 @@
                         </a>
                     </div>
 
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Peran</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl Bergabung</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse ($users as $user)
+                    <div class="overflow-x-auto">
+
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Peran</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tgl Bergabung</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse ($users as $user)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $user->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->email }}</td>
@@ -42,22 +44,23 @@
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                         {{-- Hanya izinkan hapus jika bukan user admin yang sedang login --}}
                                         @if (Auth::id() !== $user->id)
-                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus pengguna ini? Ini tidak bisa dibatalkan.');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Hapus</button>
-                                            </form>
+                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus pengguna ini? Ini tidak bisa dibatalkan.');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-900 ml-4">Hapus</button>
+                                        </form>
                                         @endif
                                     </td>
                                 </tr>
-                            @empty
+                                @empty
                                 <tr>
                                     <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">Belum ada pengguna.</td>
                                 </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    <div class="mt-4">
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                        <div class="mt-4">
                         {{ $users->links() }}
                     </div>
                 </div>

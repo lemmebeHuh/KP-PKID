@@ -22,6 +22,7 @@
                         </a>
                     </div>
 
+                    
                     <div class="overflow-x-auto"> {{-- Untuk tabel responsif jika terlalu lebar --}}
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">

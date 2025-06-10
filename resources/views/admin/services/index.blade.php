@@ -21,18 +21,20 @@
                         </a>
                     </div>
 
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Jasa</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estimasi Harga</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estimasi Durasi</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @forelse ($services as $service)
+                    <div class="overflow-x-auto">
+
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama Jasa</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estimasi Harga</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Estimasi Durasi</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                @forelse ($services as $service)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $service->name }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $service->category ? $service->category->name : 'Tanpa Kategori' }}</td>
@@ -49,16 +51,17 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @empty
+                                @empty
                                 <tr>
                                     <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">Belum ada jasa servis.</td>
                                 </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    <div class="mt-4">
-                        {{ $services->links() }}
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
+                        <div class="mt-4">
+                            {{ $services->links() }}
+                        </div>
                 </div>
             </div>
         </div>
