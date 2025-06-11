@@ -38,6 +38,7 @@ Route::get('/produk', [ProductCatalogController::class, 'index'])->name('product
 Route::get('/produk/{product:slug}', [ProductCatalogController::class, 'show'])->name('products.show-public');
 
 Route::get('/layanan-kami', [ServiceCatalogController::class, 'index'])->name('services.catalog');
+Route::get('/layanan-kami/{service:slug}', [ServiceCatalogController::class, 'show'])->name('services.show-public');
 
 Route::get('/artikel', [PublicArticleController::class, 'index'])->name('articles.index-public');
 Route::get('/artikel/{article:slug}', [PublicArticleController::class, 'show'])->name('articles.show-public');

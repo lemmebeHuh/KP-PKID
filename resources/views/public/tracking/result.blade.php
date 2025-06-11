@@ -2,13 +2,16 @@
 
 @section('title', 'Hasil Lacak Servis ' . ($serviceOrder['service_order_number'] ?? '') . ' - Pangkalan Komputer ID')
 
-@push('styles')
-{{-- Jika Anda butuh CSS khusus untuk halaman ini --}}
-<link href="{{ asset('vendor/lightbox2/css/lightbox.css') }}" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-@endpush
+
 
 @section('content')
+<head>
+    {{-- Jika Anda butuh CSS khusus untuk halaman ini --}}
+<link href="{{ asset('vendor/lightbox2/css/lightbox.css') }}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+</head>
 <div class="bg-gray-50 py-12 sm:py-16">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
 

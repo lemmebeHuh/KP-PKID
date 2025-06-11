@@ -57,7 +57,7 @@
                     </svg>
                 </a>
 
-                <a href="https://wa.me/6281273647463" target="_blank" class="text-gray-400 hover:text-gray-500">
+                <a href="https://wa.me/6283192310040" target="_blank" class="text-gray-400 hover:text-gray-500">
                     <span class="sr-only">WhatsApp</span>
                     {{-- Bootstrap Icon: Whatsapp --}}
                     <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 16 16">
