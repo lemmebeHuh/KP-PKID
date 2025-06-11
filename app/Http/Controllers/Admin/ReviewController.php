@@ -6,18 +6,17 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function index()
+    public function index(Request $request) // <-- Tambahkan Request
     {
-        $reviews = Review::with([
-                        'customer' => function ($query) { // Eager load customer
-                            $query->select('id', 'name', 'email'); // Hanya ambil kolom yg perlu
-                        }, 
-                        'serviceOrder' => function ($query) { // Eager load service order
-                            $query->select('id', 'service_order_number'); // Hanya ambil kolom yg perlu
-                        }
-                    ])
-                    ->latest() // Urutkan dari ulasan terbaru
-                    ->paginate(15); // Paginasi
+        $reviewsQuery = Review::with(['customer', 'serviceOrder']);
+
+        // Logika Filter Rating Bintang
+        if ($request->has('rating') && $request->input('rating') != '') {
+            $reviewsQuery->where('rating', $request->input('rating'));
+        }
+
+        $reviews = $reviewsQuery->latest()->paginate(15);
+        $reviews->appends($request->only('rating')); // Append filter ke paginasi
 
         return view('admin.reviews.index', compact('reviews'));
     }

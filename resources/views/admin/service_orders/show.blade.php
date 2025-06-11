@@ -18,6 +18,7 @@
             <div class="md:col-span-2 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold border-b pb-2 mb-4">Informasi Utama</h3>
+                    
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div><strong>No. Servis:</strong> {{ $serviceOrder->service_order_number }}</div>
                         <div><strong>Status Saat Ini:</strong> <span

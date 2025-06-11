@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ServiceOrderUpdate; // <-- IMPORT
 use App\Models\ServiceOrderPhoto;  // <-- IMPORT
 use App\Http\Requests\Teknisi\StoreServiceOrderUpdateByTechnicianRequest; // <-- IMPORT
+use App\Notifications\ServiceStatusUpdated;
 use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
@@ -112,6 +113,12 @@ class DashboardController extends Controller
                                  ->with('update_error', 'Anda tidak diizinkan mengubah status ke: ' . $validatedData['new_status']);
             }
         }
+        if ($serviceOrder->wasChanged('status')) { // Hanya kirim notifikasi jika status benar-benar berubah
+        $customer = $serviceOrder->customer; // Dapatkan objek user pelanggan
+        if ($customer) {
+            $customer->notify(new ServiceStatusUpdated($serviceOrder));
+        }
+    }
         return redirect()->route('teknisi.service-orders.show', $serviceOrder->id)
                          ->with('success', 'Update progres berhasil ditambahkan!' . ($statusUpdated ? ' Status order juga telah diperbarui.' : ''));
     }

@@ -17,10 +17,19 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) // <-- Tambahkan Request $request
     {
-        // Eager load relasi category untuk menghindari N+1 problem saat menampilkan nama kategori
-        $products = Product::with('category')->latest()->paginate(10); 
+        $query = Product::with('category');
+
+        // Jika ada input pencarian
+        if ($request->has('search') && !empty($request->input('search'))) {
+            $searchTerm = $request->input('search');
+            $query->where('name', 'like', '%' . $searchTerm . '%');
+        }
+
+        $products = $query->latest()->paginate(10);
+        $products->appends($request->only('search'));
+
         return view('admin.products.index', compact('products'));
     }
 

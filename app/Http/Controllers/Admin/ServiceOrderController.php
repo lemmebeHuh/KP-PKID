@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str; 
+use App\Notifications\ServiceStatusUpdated;
 use Illuminate\Support\Facades\Auth; // Import Auth jika digunakan untuk updated_by_id
 
 
@@ -20,11 +21,28 @@ class ServiceOrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) // <-- Tambahkan Request $request
     {
-        $serviceOrders = ServiceOrder::with(['customer', 'technician'])
-                                    ->latest('date_received') // Urutkan berdasarkan tanggal diterima terbaru
-                                    ->paginate(15); 
+        $query = ServiceOrder::with(['customer', 'technician']);
+
+        // Jika ada input pencarian
+        if ($request->has('search') && !empty($request->input('search'))) {
+            $searchTerm = $request->input('search');
+            $query->where(function($q) use ($searchTerm) {
+                // Mencari berdasarkan nomor servis
+                $q->where('service_order_number', 'like', '%' . $searchTerm . '%')
+                  // Mencari berdasarkan nama pelanggan (melalui relasi)
+                  ->orWhereHas('customer', function ($subQuery) use ($searchTerm) {
+                      $subQuery->where('name', 'like', '%' . $searchTerm . '%');
+                  })
+                  // Mencari berdasarkan jenis perangkat
+                  ->orWhere('device_type', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $serviceOrders = $query->latest('date_received')->paginate(15);
+        $serviceOrders->appends($request->only('search'));
+
         return view('admin.service_orders.index', compact('serviceOrders'));
     }
 
@@ -321,6 +339,13 @@ class ServiceOrderController extends Controller
             $serviceOrder->save();
             $statusUpdated = true;
         }
+
+        if ($serviceOrder->wasChanged('status')) { // Hanya kirim notifikasi jika status benar-benar berubah
+        $customer = $serviceOrder->customer; // Dapatkan objek user pelanggan
+        if ($customer) {
+            $customer->notify(new ServiceStatusUpdated($serviceOrder));
+        }
+    }
 
         // Redirect kembali ke halaman detail order servis dengan pesan sukses
         // Kita gunakan named error bag untuk validasi form update
