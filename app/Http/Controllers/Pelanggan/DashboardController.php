@@ -9,6 +9,10 @@ use Illuminate\Http\Request; // Menggunakan Request standar untuk validasi seder
 use Illuminate\Support\Facades\Auth;
 use App\Models\ServiceOrder;
 use App\Models\ServiceOrderUpdate; // <-- IMPORT
+use App\Models\User;
+use App\Notifications\NewComplaintSubmitted;
+use App\Notifications\NewReviewSubmitted;
+use App\Notifications\QuotationResponded;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class DashboardController extends Controller
@@ -104,6 +108,14 @@ class DashboardController extends Controller
             'status_from' => 'Menunggu Persetujuan Pelanggan', // Status sebelum aksi ini
             'status_to' => $serviceOrder->status, // Status baru setelah aksi ini
         ]);
+        // Kirim Notifikasi ke semua Admin
+        $admins = User::whereHas('role', function ($query) {
+            $query->where('name', 'Admin');
+        })->get();
+
+        foreach ($admins as $admin) {
+            $admin->notify(new QuotationResponded($serviceOrder));
+        }
 
         return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
                          ->with('success', 'Respon Anda telah berhasil disimpan. Status order telah diperbarui.');
@@ -189,6 +201,23 @@ class DashboardController extends Controller
             'is_approved' => true, // Langsung approve, atau set false jika perlu moderasi Admin
         ]);
 
+            $newReview = Review::create([ // Simpan review baru ke variabel $newReview
+            'service_order_id' => $serviceOrder->id,
+            'customer_id' => Auth::id(),
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'],
+            'is_approved' => true,
+        ]);
+
+        // Kirim Notifikasi ke semua Admin
+        $admins = User::whereHas('role', function ($query) {
+            $query->where('name', 'Admin');
+        })->get();
+
+        foreach ($admins as $admin) {
+            $admin->notify(new NewReviewSubmitted($newReview));
+        }
+
         return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
                          ->with('success', 'Terima kasih! Ulasan Anda telah berhasil disimpan.');
     }
@@ -234,6 +263,23 @@ class DashboardController extends Controller
             'description' => $validated['description'],
             'status' => 'Open', // Status awal komplain
         ]);
+
+        $newComplaint = Complaint::create([ // Simpan ke variabel $newComplaint
+        'service_order_id' => $serviceOrder->id,
+        'customer_id' => Auth::id(),
+        'subject' => $validated['subject'],
+        'description' => $validated['description'],
+        'status' => 'Open',
+         ]);
+
+        // Kirim Notifikasi ke semua Admin
+        $admins = User::whereHas('role', function ($query) {
+            $query->where('name', 'Admin');
+        })->get();
+
+        foreach ($admins as $admin) {
+            $admin->notify(new NewComplaintSubmitted($newComplaint));
+        }
 
         return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
                          ->with('success', 'Komplain Anda telah berhasil dikirim. Kami akan segera menindaklanjutinya.');
