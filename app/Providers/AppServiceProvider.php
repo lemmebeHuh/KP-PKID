@@ -25,14 +25,9 @@ class AppServiceProvider extends ServiceProvider
     {
         // Bagikan data notifikasi ke view navigation
         View::composer('layouts.navigation', function ($view) {
-            if (Auth::check()) {
-                $user = Auth::user();
-                $view->with('unreadNotifications', $user->unreadNotifications);
-                $view->with('notifications', $user->notifications()->take(5)->get()); // Ambil 5 notifikasi terakhir
-            } else {
-                $view->with('unreadNotifications', collect());
-                $view->with('notifications', collect());
-            }
-        });
+        if (Auth::check()) {
+            $view->with('unreadNotifications', Auth::user()->unreadNotifications);
+        }
+    });
     }
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\ProductCatalogController;
 use App\Http\Controllers\ServiceCatalogController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ArticleController as PublicArticleController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 
 
@@ -72,6 +73,7 @@ Route::post('/kontak-kami/kirim', [PageController::class, 'sendContactMessage'])
 //     })->middleware('role:pelanggan');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+     Route::get('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     // ... (rute profile dan dashboard pelanggan/teknisi) ...
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

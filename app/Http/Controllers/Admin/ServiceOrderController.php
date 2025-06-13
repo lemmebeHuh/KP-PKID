@@ -10,6 +10,7 @@ use App\Models\ServiceOrder;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Notifications\OrderStatusUpdatedNotification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str; 
 use App\Notifications\ServiceStatusUpdated;
@@ -340,16 +341,14 @@ class ServiceOrderController extends Controller
             $statusUpdated = true;
         }
 
-        if ($serviceOrder->wasChanged('status')) { // Hanya kirim notifikasi jika status benar-benar berubah
-        $customer = $serviceOrder->customer; // Dapatkan objek user pelanggan
+        if ($serviceOrder->wasChanged('status')) {
+        $customer = $serviceOrder->customer;
         if ($customer) {
-            $customer->notify(new ServiceStatusUpdated($serviceOrder));
+            $customer->notify(new OrderStatusUpdatedNotification($serviceOrder));
         }
     }
 
-        // Redirect kembali ke halaman detail order servis dengan pesan sukses
-        // Kita gunakan named error bag untuk validasi form update
-        return redirect()->route('admin.service-orders.show', $serviceOrder->id)
-                         ->with('success', 'Update progres berhasil ditambahkan!' . ($statusUpdated ? ' Status order juga telah diperbarui.' : ''));
+    return redirect()->route('admin.service-orders.show', $serviceOrder->id)
+                     ->with('success', 'Update progres berhasil ditambahkan!');
     }
 }
