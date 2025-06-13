@@ -92,7 +92,7 @@
             <div class="px-4 py-2 text-sm text-gray-700 font-semibold border-b flex justify-between items-center">
                 <span>Notifikasi</span>
                 {{-- Link untuk menandai semua sudah dibaca bisa ditambahkan nanti --}}
-                {{-- <a href="#" class="text-xs text-indigo-600 hover:underline">Tandai semua dibaca</a> --}}
+                {{-- <a href="#" class="text-xs text-primary hover:underline">Tandai semua dibaca</a> --}}
             </div>
             <div class="max-h-96 overflow-y-auto">
                 @forelse($notifications as $notification)
@@ -107,7 +107,7 @@
             </div>
             {{-- Link ke halaman semua notifikasi bisa ditambahkan nanti --}}
             {{-- <div class="px-4 py-2 text-xs text-center border-t">
-                <a href="#" class="text-indigo-600 hover:underline">Lihat Semua Notifikasi</a>
+                <a href="#" class="text-primary hover:underline">Lihat Semua Notifikasi</a>
             </div> --}}
         </x-slot>
     </x-dropdown>

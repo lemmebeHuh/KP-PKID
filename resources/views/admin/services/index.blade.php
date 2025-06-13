@@ -43,7 +43,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $service->estimated_duration ?: '-' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('admin.services.edit', $service->id) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        <a href="{{ route('admin.services.edit', $service->id) }}" class="text-primary hover:text-indigo-900">Edit</a>
                                         <form action="{{ route('admin.services.destroy', $service->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus jasa ini?');">
                                             @csrf
                                             @method('DELETE')

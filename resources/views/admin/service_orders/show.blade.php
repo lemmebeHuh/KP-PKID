@@ -5,7 +5,7 @@
                 {{ __('Detail Order Servis: ') }} {{ $serviceOrder->service_order_number }}
             </h2>
             <a href="{{ route('admin.service-orders.edit', $serviceOrder->id) }}"
-                class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded">
                 Edit Order Ini
             </a>
         </div>

@@ -16,7 +16,7 @@
             @endif
             <div class="p-6 sm:p-8">
                 @if($article->category)
-                <p class="text-sm text-indigo-600 font-semibold uppercase">{{ $article->category->name }}</p>
+                <p class="text-sm text-primary font-semibold uppercase">{{ $article->category->name }}</p>
                 @endif
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">{{ $article->title }}</h1>
                 <div class="mt-4 flex items-center text-sm text-gray-500">
@@ -30,7 +30,7 @@
                     {{ $article->content }}
                 </div>
                  <div class="mt-8 text-center">
-                    <a href="{{ route('articles.index-public') }}" class="text-sm text-indigo-600 hover:text-indigo-800">&larr; Kembali ke Daftar Artikel</a>
+                    <a href="{{ route('articles.index-public') }}" class="text-sm text-primary hover:text-primary-dark">&larr; Kembali ke Daftar Artikel</a>
                 </div>
             </div>
         </div>
@@ -44,10 +44,10 @@
                 <div class="bg-white rounded-lg shadow flex flex-col">
                     <div class="p-4 flex-grow">
                         @if($latest->category)
-                        <p class="text-xs text-indigo-600 font-semibold uppercase">{{ $latest->category->name }}</p>
+                        <p class="text-xs text-primary font-semibold uppercase">{{ $latest->category->name }}</p>
                         @endif
                         <h4 class="font-semibold text-gray-800 mt-1">
-                            <a href="{{ route('articles.show-public', $latest->slug) }}" class="hover:text-indigo-800">{{ $latest->title }}</a>
+                            <a href="{{ route('articles.show-public', $latest->slug) }}" class="hover:text-primary-dark">{{ $latest->title }}</a>
                         </h4>
                     </div>
                 </div>

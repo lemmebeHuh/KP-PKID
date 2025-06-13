@@ -57,12 +57,12 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         {{-- Link ke halaman detail servis pelanggan (akan kita buat rutenya) --}}
                                         <a href="{{ route('pelanggan.service-orders.show', $order->id) }}"
-                                            class="text-indigo-600 hover:text-indigo-900">
+                                            class="text-primary hover:text-indigo-900">
                                             Lihat Detail
                                         </a>
                                         {{-- Atau kita bisa buat halaman detail khusus untuk pelanggan yang login --}}
                                         {{-- <a href="{{ route('pelanggan.service-orders.show', $order->id) }}"
-                                            class="text-indigo-600 hover:text-indigo-900">Lihat Detail</a> --}}
+                                            class="text-primary hover:text-indigo-900">Lihat Detail</a> --}}
                                     </td>
                                 </tr>
                                 @endforeach

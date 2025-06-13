@@ -25,17 +25,17 @@
                         @csrf
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-gray-700">Nama Kategori</label>
-                            <input type="text" name="name" id="name" value="{{ old('name') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                            <input type="text" name="name" id="name" value="{{ old('name') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" required>
                         </div>
 
                         <div class="mb-4">
                             <label for="slug" class="block text-sm font-medium text-gray-700">Slug (Opsional, akan dibuat otomatis jika kosong)</label>
-                            <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
                         </div>
 
                         <div class="mb-4">
                             <label for="type" class="block text-sm font-medium text-gray-700">Tipe Kategori</label>
-                            <select name="type" id="type" class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                            <select name="type" id="type" class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm" required>
                                 <option value="">Pilih Tipe</option>
                                 @foreach ($types as $value => $label)
                                     <option value="{{ $value }}" {{ old('type') == $value ? 'selected' : '' }}>{{ $label }}</option>
@@ -45,7 +45,7 @@
 
                         <div class="mb-4">
                             <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi (Opsional)</label>
-                            <textarea name="description" id="description" rows="3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ old('description') }}</textarea>
+                            <textarea name="description" id="description" rows="3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">{{ old('description') }}</textarea>
                         </div>
 
                         <div>

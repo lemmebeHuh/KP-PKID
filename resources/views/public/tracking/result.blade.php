@@ -18,12 +18,12 @@
         {{-- Header Halaman --}}
         <div class="text-center mb-8">
             <a href="{{ route('tracking.form') }}">
-            <img src="{{ asset('images/pkid-logo.png') }}" alt="Logo Pangkalan Komputer ID" class="mx-auto h-16 mb-2">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo Pangkalan Komputer ID" class="mx-auto h-16 mb-2">
 
             </a>
             <h1 class="text-3xl font-bold text-gray-800">Status Servis Anda</h1>
-            <p class="text-gray-600 mt-1">Lacak progres perbaikan untuk nomor servis: <span class="font-semibold text-indigo-600">{{ $serviceOrder['service_order_number'] }}</span></p>
-            <a href="{{ route('tracking.form') }}" class="mt-4 inline-block text-sm text-indigo-600 hover:text-indigo-800">&larr; Lacak Nomor Servis Lain</a>
+            <p class="text-gray-600 mt-1">Lacak progres perbaikan untuk nomor servis: <span class="font-semibold text-primary">{{ $serviceOrder['service_order_number'] }}</span></p>
+            <a href="{{ route('tracking.form') }}" class="mt-4 inline-block text-sm text-primary hover:text-primary-dark">&larr; Lacak Nomor Servis Lain</a>
         </div>
 
         @if (isset($serviceOrder) && !empty($serviceOrder))
@@ -64,7 +64,7 @@
                         {{-- Ikon Timeline --}}
                         <span class="absolute flex items-center justify-center w-6 h-6 bg-indigo-100 rounded-full -left-3 ring-8 ring-white">
                             {{-- Contoh ikon SVG --}}
-                            <svg class="w-3 h-3 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd"></path></svg>
+                            <svg class="w-3 h-3 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L9.414 11H13a1 1 0 100-2H9.414l1.293-1.293z" clip-rule="evenodd"></path></svg>
                         </span>
                         {{-- Konten Update --}}
                         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm">

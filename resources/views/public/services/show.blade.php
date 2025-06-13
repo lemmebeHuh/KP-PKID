@@ -16,7 +16,7 @@
         </nav>
 
         <div class="lg:text-center">
-            <h2 class="text-base font-semibold text-indigo-600 tracking-wide uppercase">Layanan Jasa</h2>
+            <h2 class="text-base font-semibold text-primary tracking-wide uppercase">Layanan Jasa</h2>
             <p class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl">{{ $service->name }}</p>
             <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">{{ $service->description ?: 'Deskripsi detail untuk layanan ini akan segera tersedia.' }}</p>
         </div>
@@ -54,7 +54,7 @@
             </div>
         </div>
          <div class="mt-8 text-center">
-            <a href="{{ route('services.catalog') }}" class="text-sm text-indigo-600 hover:text-indigo-800">&larr; Kembali ke Daftar Layanan</a>
+            <a href="{{ route('services.catalog') }}" class="text-sm text-primary hover:text-primary-dark">&larr; Kembali ke Daftar Layanan</a>
         </div>
     </div>
 </div>

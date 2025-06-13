@@ -18,14 +18,14 @@
                 <ul class="space-y-2">
                     <li>
                         <a href="{{ route('products.catalog', ['search' => request('search')]) }}" 
-                           class="block px-3 py-2 rounded-md text-sm {{ !$selectedCategory ? 'bg-indigo-100 text-indigo-700 font-semibold' : 'text-gray-600 hover:bg-gray-200' }}">
+                           class="block px-3 py-2 rounded-md text-sm {{ !$selectedCategory ? 'bg-indigo-100 text-primary font-semibold' : 'text-gray-600 hover:bg-gray-200' }}">
                             Semua Kategori
                         </a>
                     </li>
                     @foreach ($productCategories as $category)
                         <li>
                             <a href="{{ route('products.catalog', ['kategori' => $category->slug, 'search' => request('search')]) }}" 
-                               class="block px-3 py-2 rounded-md text-sm {{ $selectedCategory && $selectedCategory->id == $category->id ? 'bg-indigo-100 text-indigo-700 font-semibold' : 'text-gray-600 hover:bg-gray-200' }}">
+                               class="block px-3 py-2 rounded-md text-sm {{ $selectedCategory && $selectedCategory->id == $category->id ? 'bg-indigo-100 text-primary font-semibold' : 'text-gray-600 hover:bg-gray-200' }}">
                                 {{ $category->name }}
                             </a>
                         </li>
@@ -47,7 +47,7 @@
         {{-- Form Pencarian --}}
         <div class="w-full sm:max-w-xs">
             <div class="flex rounded-md shadow-sm">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="flex-1 block w-full border-gray-300 rounded-l-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="flex-1 block w-full border-gray-300 rounded-l-md focus:border-primary focus:ring-primary sm:text-sm">
                 <button type="submit" class="inline-flex items-center px-3 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-gray-500 hover:bg-gray-200">
                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
                 </button>
@@ -60,7 +60,7 @@
         {{-- DROPDOWN UNTUK SORTING --}}
         <div class="flex items-center mt-4 sm:mt-0">
             <label for="sort" class="mr-2 text-sm font-medium text-gray-700">Urutkan:</label>
-            <select name="sort" id="sort" onchange="document.getElementById('filter-form').submit();" class="text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+            <select name="sort" id="sort" onchange="document.getElementById('filter-form').submit();" class="text-sm border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary">
                 <option value="latest" {{ request('sort') == 'latest' ? 'selected' : '' }}>Terbaru</option>
                 <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Harga: Terendah ke Tertinggi</option>
                 <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Harga: Tertinggi ke Terendah</option>
@@ -68,7 +68,7 @@
         </div>
 
         {{-- Tombol Filter untuk Mobile (sudah ada) --}}
-        <button @click="openFilter = !openFilter" type="button" class="lg:hidden mt-4 sm:mt-0 flex items-center text-sm font-medium text-gray-700 hover:text-gray-900">
+        <button @click="openFilter = !openFilter" type="button" class="lg:hidden mt-4 sm:mt-0 flex items-center text-sm font-medium text-gray-700 hover:text-primary">
             <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L12 14.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 016 17V6.414L3.293 3.707A1 1 0 013 3V4z" /></svg>
             Filter Kategori
         </button>
@@ -80,10 +80,10 @@
                     <h3 class="text-base text-gray-600">
                         Menampilkan <span class="font-semibold text-gray-900">{{ $products->firstItem() }}-{{ $products->lastItem() }}</span> dari <span class="font-semibold text-gray-900">{{ $products->total() }}</span> hasil
                         @if($selectedCategory)
-                            dalam kategori <span class="font-semibold text-indigo-600">"{{ $selectedCategory->name }}"</span>
+                            dalam kategori <span class="font-semibold text-primary">"{{ $selectedCategory->name }}"</span>
                         @endif
                         @if(request('search'))
-                            untuk pencarian <span class="font-semibold text-indigo-600">"{{ request('search') }}"</span>
+                            untuk pencarian <span class="font-semibold text-primary">"{{ request('search') }}"</span>
                         @endif
                     </h3>
                     {{-- TAMBAHKAN TOMBOL RESET DI SINI --}}
@@ -112,11 +112,11 @@
                                 </div>
                             </a>
                             <div class="p-4 flex-grow flex flex-col">
-                                <h3 class="text-md font-semibold text-gray-800" style="min-height: 2.5rem;"><a href="{{ route('products.show-public', $product->slug) }}" class="hover:text-indigo-600">{{ Str::limit($product->name, 40) }}</a></h3>
+                                <h3 class="text-md font-semibold text-gray-800" style="min-height: 2.5rem;"><a href="{{ route('products.show-public', $product->slug) }}" class="hover:text-primary">{{ Str::limit($product->name, 40) }}</a></h3>
                                 @if($product->category)<p class="text-xs text-gray-500 mb-2">{{ $product->category->name }}</p>@endif
                                 <div class="mt-auto">
-                                    <p class="text-lg font-bold text-indigo-600 mb-3">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                    <a href="{{ route('products.show-public', $product->slug) }}" class="block w-full text-center bg-indigo-500 text-white py-2 rounded-md hover:bg-indigo-600 text-sm font-medium">Lihat Detail</a>
+                                    <p class="text-lg font-bold text-primary mb-3">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                    <a href="{{ route('products.show-public', $product->slug) }}" class="block w-full text-center bg-primary text-white py-2 rounded-md hover:bg-primary text-sm font-medium">Lihat Detail</a>
                                 </div>
                             </div>
                         </div>

@@ -14,19 +14,19 @@
                     <div class="sm:text-center lg:text-left">
                         <h1 class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
                             <span class="block xl:inline">Solusi Lengkap</span>
-                            <span class="block text-indigo-400 xl:inline">Servis & Produk IT</span>
+                            <span class="block text-primary-400 xl:inline">Servis & Produk IT</span>
                         </h1>
                         <p class="mt-3 text-base text-gray-300 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                             Pangkalan Komputer ID menyediakan layanan perbaikan profesional dan transparan, serta berbagai produk dan aksesoris komputer berkualitas untuk semua kebutuhan Anda.
                         </p>
                         <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                             <div class="rounded-md shadow">
-                                <a href="{{ route('tracking.form') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                                <a href="{{ route('tracking.form') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-dark md:py-4 md:text-lg md:px-10">
                                     Lacak Servis Anda
                                 </a>
                             </div>
                             <div class="mt-3 sm:mt-0 sm:ml-3">
-                                <a href="{{ route('services.catalog') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10">
+                                <a href="{{ route('services.catalog') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10">
                                     Lihat Layanan
                                 </a>
                             </div>
@@ -42,7 +42,7 @@
     <div class="py-12 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="lg:text-center">
-                <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Layanan Kami</h2>
+                <h2 class="text-base text-primary font-semibold tracking-wide uppercase">Layanan Kami</h2>
                 <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                     Apa yang Bisa Kami Bantu?
                 </p>
@@ -56,7 +56,7 @@
                     <div class="relative">
                         <dt>
                             {{-- SVG Icon Placeholder --}}
-                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                            <div class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 16v-2m0-8v-2m0 8v-2m-4-2H4m16 0h-2m-8-4H4m16 0h-2m-4-2V4m0 16v-2m0-8v-2" /></svg>
                             </div>
                             <p class="ml-16 text-lg leading-6 font-medium text-gray-900">{{ $service->name }}</p>
@@ -75,7 +75,7 @@
     <div class="bg-gray-50 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                 <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Katalog Produk</h2>
+                 <h2 class="text-base text-primary font-semibold tracking-wide uppercase">Katalog Produk</h2>
                 <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                     Produk Terbaru Kami
                 </p>
@@ -94,17 +94,17 @@
                          </a>
                          <div class="p-4 flex-grow flex flex-col">
                              <h3 class="text-md font-semibold text-gray-800" style="min-height: 2.5rem;">
-                                 <a href="{{ route('products.show-public', $product->slug) }}" class="hover:text-indigo-600">{{ Str::limit($product->name, 40) }}</a>
+                                 <a href="{{ route('products.show-public', $product->slug) }}" class="hover:text-primary">{{ Str::limit($product->name, 40) }}</a>
                              </h3>
                              <div class="mt-auto">
-                                 <p class="text-lg font-bold text-indigo-600">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                 <p class="text-lg font-bold text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
                              </div>
                          </div>
                      </div>
                      @endforeach
                 </div>
                 <div class="text-center mt-8">
-                    <a href="{{ route('products.catalog') }}" class="text-indigo-600 hover:text-indigo-800 font-semibold">Lihat Semua Produk &rarr;</a>
+                    <a href="{{ route('products.catalog') }}" class="text-primary hover:text-primary-dark font-semibold">Lihat Semua Produk &rarr;</a>
                 </div>
             @else
                 <p class="text-center text-gray-500">Produk akan segera tersedia.</p>
@@ -116,7 +116,7 @@
     <div class="py-12 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                 <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">Blog & Artikel</h2>
+                 <h2 class="text-base text-primary font-semibold tracking-wide uppercase">Blog & Artikel</h2>
                 <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                     Tips & Trik Terbaru dari Kami
                 </p>
@@ -128,16 +128,16 @@
                     <div class="bg-gray-50 rounded-lg overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
                         <a href="{{ route('articles.show-public', $article->slug) }}" class="block p-6">
                             @if($article->category)
-                            <p class="text-xs text-indigo-600 font-semibold uppercase">{{ $article->category->name }}</p>
+                            <p class="text-xs text-primary font-semibold uppercase">{{ $article->category->name }}</p>
                             @endif
-                            <h3 class="mt-1 text-lg font-semibold text-gray-800 hover:text-indigo-800">{{ $article->title }}</h3>
+                            <h3 class="mt-1 text-lg font-semibold text-gray-800 hover:text-primary-dark">{{ $article->title }}</h3>
                             <p class="mt-2 text-gray-600 text-sm">{{ $article->excerpt }}</p>
                         </a>
                     </div>
                     @endforeach
                 </div>
                 <div class="text-center mt-8">
-                    <a href="{{ route('articles.index-public') }}" class="text-indigo-600 hover:text-indigo-800 font-semibold">Lihat Semua Artikel &rarr;</a>
+                    <a href="{{ route('articles.index-public') }}" class="text-primary hover:text-primary-dark font-semibold">Lihat Semua Artikel &rarr;</a>
                 </div>
             @else
                  <p class="text-center text-gray-500">Artikel akan segera tersedia.</p>

@@ -29,7 +29,7 @@
                 {{-- Thumbnail (jika ada lebih dari 1 gambar nanti) --}}
                 <div class="mt-4 grid grid-cols-5 gap-4">
                     {{-- Contoh Thumbnail Aktif --}}
-                    <div class="aspect-w-1 aspect-h-1 w-full rounded-md border-2 border-indigo-500 overflow-hidden">
+                    <div class="aspect-w-1 aspect-h-1 w-full rounded-md border-2 border-primary overflow-hidden">
                         @if ($product->image_path && Storage::disk('public')->exists($product->image_path))
                             <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" class="h-full w-full object-contain object-center">
                         @else
@@ -83,10 +83,10 @@
                 <div x-data="{ tab: 'deskripsi' }" class="mt-10">
                     <div class="border-b border-gray-200">
                         <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                            <button @click="tab = 'deskripsi'" :class="{ 'border-indigo-500 text-indigo-600': tab === 'deskripsi', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'deskripsi' }" class="whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                            <button @click="tab = 'deskripsi'" :class="{ 'border-primary text-primary': tab === 'deskripsi', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'deskripsi' }" class="whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
                                 Deskripsi
                             </button>
-                            <button @click="tab = 'spesifikasi'" :class="{ 'border-indigo-500 text-indigo-600': tab === 'spesifikasi', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'spesifikasi' }" class="whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                            <button @click="tab = 'spesifikasi'" :class="{ 'border-primary text-primary': tab === 'spesifikasi', 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': tab !== 'spesifikasi' }" class="whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
                                 Spesifikasi
                             </button>
                         </nav>

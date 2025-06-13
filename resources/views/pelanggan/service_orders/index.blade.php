@@ -66,7 +66,7 @@
                                         <a href="{{ route('admin.service-orders.show', $order->id) }}"
                                             class="text-blue-600 hover:text-blue-900 mr-2">Lihat</a>
                                         <a href="{{ route('admin.service-orders.edit', $order->id) }}"
-                                            class="text-indigo-600 hover:text-indigo-900">Edit/Update</a>
+                                            class="text-primary hover:text-indigo-900">Edit/Update</a>
                                         {{-- Tombol Hapus bisa ditambahkan nanti, hati-hati dengan foreign key --}}
                                         <form action="{{ route('admin.service-orders.destroy', $order->id) }}"
                                             method="POST" class="inline-block"

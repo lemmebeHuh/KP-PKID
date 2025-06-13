@@ -15,7 +15,7 @@
                         <p><strong>Email:</strong> {{ $complaint->customer->email ?? 'N/A' }}</p>
                         @if($complaint->serviceOrder)
                         <p><strong>No. Order Servis Terkait:</strong> 
-                            <a href="{{ route('admin.service-orders.show', $complaint->serviceOrder->id) }}" class="text-indigo-600 hover:text-indigo-900">
+                            <a href="{{ route('admin.service-orders.show', $complaint->serviceOrder->id) }}" class="text-primary hover:text-indigo-900">
                                 {{ $complaint->serviceOrder->service_order_number }}
                             </a>
                         </p>

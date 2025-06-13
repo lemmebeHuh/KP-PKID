@@ -8,9 +8,9 @@
         {{-- Header Halaman --}}
         <header class="mb-8 text-center">
             @if ($selectedCategory)
-                <h1 class="text-4xl font-bold tracking-tight text-gray-900">Layanan dalam Kategori: <span class="text-indigo-600">{{ $selectedCategory->name }}</span></h1>
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900">Layanan dalam Kategori: <span class="text-primary">{{ $selectedCategory->name }}</span></h1>
                 <p class="mt-2 text-lg text-gray-600">{{ $selectedCategory->description }}</p>
-                <a href="{{ route('services.catalog') }}" class="mt-4 inline-block text-sm font-medium text-indigo-600 hover:text-indigo-800">&larr; Lihat Semua Kategori Layanan</a>
+                <a href="{{ route('services.catalog') }}" class="mt-4 inline-block text-sm font-medium text-primary hover:text-primary-dark">&larr; Lihat Semua Kategori Layanan</a>
             @else
                 <h1 class="text-4xl font-bold tracking-tight text-gray-900">Layanan Jasa Servis Kami</h1>
                 <p class="mt-2 text-lg text-gray-600">Solusi profesional untuk semua kebutuhan perbaikan dan perawatan komputer Anda.</p>
@@ -24,16 +24,16 @@
                 <div>
                     <label for="search" class="sr-only">Cari Layanan</label>
                     <div class="flex rounded-md shadow-sm">
-                        <input type="text" name="search" id="search" value="{{ request('search') }}" class="flex-1 block w-full border-gray-300 rounded-l-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" placeholder="Cari layanan (misal: ganti keyboard)...">
-                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-r-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700">Cari</button>
+                        <input type="text" name="search" id="search" value="{{ request('search') }}" class="flex-1 block w-full border-gray-300 rounded-l-md focus:border-primary focus:ring-primary sm:text-sm" placeholder="Cari layanan (misal: ganti keyboard)...">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-primary border border-transparent rounded-r-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-dark">Cari</button>
                     </div>
                 </div>
                 {{-- Filter Kategori --}}
                 <div class="text-center">
                     <span class="text-sm text-gray-500 mr-2">Filter Kategori:</span>
-                    <a href="{{ route('services.catalog', ['search' => request('search')]) }}" class="inline-block px-3 py-1 rounded-full text-xs font-medium border {{ !$selectedCategory ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-700 hover:bg-gray-50' }}">Semua</a>
+                    <a href="{{ route('services.catalog', ['search' => request('search')]) }}" class="inline-block px-3 py-1 rounded-full text-xs font-medium border {{ !$selectedCategory ? 'bg-primary text-white border-indigo-600' : 'bg-white text-gray-700 hover:bg-gray-50' }}">Semua</a>
                     @foreach ($serviceCategories as $category)
-                        <a href="{{ route('services.catalog', ['kategori' => $category->slug, 'search' => request('search')]) }}" class="inline-block px-3 py-1 rounded-full text-xs font-medium border {{ $selectedCategory && $selectedCategory->id == $category->id ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-700 hover:bg-gray-50' }}">{{ $category->name }}</a>
+                        <a href="{{ route('services.catalog', ['kategori' => $category->slug, 'search' => request('search')]) }}" class="inline-block px-3 py-1 rounded-full text-xs font-medium border {{ $selectedCategory && $selectedCategory->id == $category->id ? 'bg-primary text-white border-indigo-600' : 'bg-white text-gray-700 hover:bg-gray-50' }}">{{ $category->name }}</a>
                     @endforeach
                 </div>
             </form>
@@ -46,14 +46,14 @@
                 <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out p-6 flex flex-col">
                     {{-- Ikon Layanan --}}
                     <div class="flex-shrink-0">
-                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-500 text-white">
+                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-primary text-white">
                             {{-- Placeholder Icon --}}
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1-1-3.87-3.87a3.87 3.87 0 010-5.47L9 2l1-1 3.75.87M9 2L3 8m6 9l6-6m-6 6L6 12m3 9l6 6"></path></svg>
                         </span>
                     </div>
                     <div class="mt-4 flex-grow">
                         <h3 class="text-lg font-semibold text-gray-900">
-                            <a href="{{ route('services.show-public', $service->slug) }}" class="hover:text-indigo-700">
+                            <a href="{{ route('services.show-public', $service->slug) }}" class="hover:text-primary">
                                 {{ $service->name }}
                             </a>
                         </h3>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="mt-5">
-                        <a href="{{ route('services.show-public', $service->slug) }}" class="block w-full text-center bg-indigo-50 text-indigo-700 font-semibold py-2 px-4 rounded-lg hover:bg-indigo-100 transition-colors">
+                        <a href="{{ route('services.show-public', $service->slug) }}" class="block w-full text-center bg-indigo-50 text-primary font-semibold py-2 px-4 rounded-lg hover:bg-indigo-100 transition-colors">
                             Lihat Detail Layanan
                         </a>
                     </div>

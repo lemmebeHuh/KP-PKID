@@ -12,17 +12,17 @@
     @if (request('search'))
         <div class="mb-6 text-center">
             <p class="text-lg text-gray-700">Hasil pencarian untuk: <strong class="font-semibold">{{ request('search') }}</strong></p>
-            <a href="{{ route('articles.index-public') }}" class="text-sm text-indigo-600 hover:text-indigo-800">Lihat semua artikel</a>
+            <a href="{{ route('articles.index-public') }}" class="text-sm text-primary hover:text-primary-dark">Lihat semua artikel</a>
         </div>
     @endif
 
     <div class="mb-8 max-w-lg mx-auto">
         <form action="{{ route('articles.index-public') }}" method="GET" class="flex">
             <input type="text" name="search"
-                   class="w-full border-gray-300 rounded-l-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                   class="w-full border-gray-300 rounded-l-md shadow-sm focus:border-primary focus:ring-primary"
                    placeholder="Cari artikel berdasarkan judul..."
                    value="{{ request('search') }}">
-            <button type="submit" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-r-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700">
+            <button type="submit" class="inline-flex items-center px-4 py-2 bg-primary border border-transparent rounded-r-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-primary-dark">
                 Cari
             </button>
         </form>
@@ -41,10 +41,10 @@
                 </a>
                 <div class="p-6 flex-grow flex flex-col">
                     @if($article->category)
-                    <p class="text-xs text-indigo-600 font-semibold uppercase">{{ $article->category->name }}</p>
+                    <p class="text-xs text-primary font-semibold uppercase">{{ $article->category->name }}</p>
                     @endif
                     <h3 class="mt-1 text-xl font-semibold text-gray-800">
-                        <a href="{{ route('articles.show-public', $article->slug) }}" class="hover:text-indigo-800">{{ $article->title }}</a>
+                        <a href="{{ route('articles.show-public', $article->slug) }}" class="hover:text-primary-dark">{{ $article->title }}</a>
                     </h3>
                     <p class="mt-2 text-gray-600 text-sm flex-grow">{{ $article->excerpt }}</p>
                     <div class="mt-4 flex items-center text-xs text-gray-500">

@@ -5,7 +5,7 @@
             {{-- Kolom 1: Logo & Deskripsi Singkat --}}
             <div class="md:col-span-2">
                 <a href="{{ route('home') }}">
-                    <img width="100px" src="{{ asset('images/pkid-logo.png') }}" alt="Pangkalan Komputer ID">
+                    <img width="100px" src="{{ asset('images/logo.png') }}" alt="Pangkalan Komputer ID">
                 </a>
                 <p class="mt-4 text-gray-500 text-base max-w-xs">
                     Solusi terpercaya untuk setiap kebutuhan teknologi Anda di Bandung.
@@ -16,10 +16,10 @@
             <div>
                 <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase">Navigasi</h3>
                 <ul role="list" class="mt-4 space-y-4">
-                    <li><a href="{{ route('about') }}" class="text-base text-gray-500 hover:text-gray-900">Tentang Kami</a></li>
-                    <li><a href="{{ route('products.catalog') }}" class="text-base text-gray-500 hover:text-gray-900">Produk</a></li>
-                    <li><a href="{{ route('services.catalog') }}" class="text-base text-gray-500 hover:text-gray-900">Layanan</a></li>
-                    <li><a href="{{ route('articles.index-public') }}" class="text-base text-gray-500 hover:text-gray-900">Artikel</a></li>
+                    <li><a href="{{ route('about') }}" class="text-base text-gray-500 hover:text-primary">Tentang Kami</a></li>
+                    <li><a href="{{ route('products.catalog') }}" class="text-base text-gray-500 hover:text-primary">Produk</a></li>
+                    <li><a href="{{ route('services.catalog') }}" class="text-base text-gray-500 hover:text-primary">Layanan</a></li>
+                    <li><a href="{{ route('articles.index-public') }}" class="text-base text-gray-500 hover:text-primary">Artikel</a></li>
                 </ul>
             </div>
 
@@ -27,9 +27,9 @@
             <div>
                 <h3 class="text-sm font-semibold text-gray-900 tracking-wider uppercase">Bantuan</h3>
                 <ul role="list" class="mt-4 space-y-4">
-                    <li><a href="{{ route('contact') }}" class="text-base text-gray-500 hover:text-gray-900">Kontak Kami</a></li>
-                    <li><a href="{{ route('tracking.form') }}" class="text-base text-gray-500 hover:text-gray-900">Lacak Servis</a></li>
-                    <li><a href="#" class="text-base text-gray-500 hover:text-gray-900">FAQ</a></li>
+                    <li><a href="{{ route('contact') }}" class="text-base text-gray-500 hover:text-primary">Kontak Kami</a></li>
+                    <li><a href="{{ route('tracking.form') }}" class="text-base text-gray-500 hover:text-primary">Lacak Servis</a></li>
+                    <li><a href="#" class="text-base text-gray-500 hover:text-primary">FAQ</a></li>
                 </ul>
             </div>
 

@@ -11,7 +11,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <h3 class="text-sm font-medium text-gray-500 truncate">Order Servis Berjalan</h3>
-                    <p class="mt-1 text-3xl font-semibold text-indigo-600">{{ $ongoingServiceOrdersCount }}</p>
+                    <p class="mt-1 text-3xl font-semibold text-primary">{{ $ongoingServiceOrdersCount }}</p>
                 </div>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <h3 class="text-sm font-medium text-gray-500 truncate">Komplain Terbuka</h3>
@@ -45,7 +45,7 @@
                             @forelse($topCustomers as $customer)
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10 bg-indigo-200 rounded-full flex items-center justify-center">
-                                        <span class="text-indigo-600 font-bold">{{ substr($customer->name, 0, 1) }}</span>
+                                        <span class="text-primary font-bold">{{ substr($customer->name, 0, 1) }}</span>
                                     </div>
                                     <div class="ml-4">
                                         <div class="text-sm font-medium text-gray-900">{{ $customer->name }}</div>
@@ -69,7 +69,7 @@
                             @forelse($latestServiceOrders as $order)
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <a href="{{ route('admin.service-orders.show', $order->id) }}" class="text-sm font-semibold text-indigo-600 hover:underline">{{ $order->service_order_number }}</a>
+                                        <a href="{{ route('admin.service-orders.show', $order->id) }}" class="text-sm font-semibold text-primary hover:underline">{{ $order->service_order_number }}</a>
                                         <p class="text-sm text-gray-600">{{ $order->customer->name ?? 'N/A' }} - {{ $order->device_type }}</p>
                                     </div>
                                     <div class="text-sm text-gray-500 text-right">
@@ -82,7 +82,7 @@
                             @endforelse
                         </div>
                         <div class="mt-4">
-                            <a href="{{ route('admin.service-orders.index') }}" class="text-sm font-medium text-indigo-600 hover:underline">Lihat semua order servis &rarr;</a>
+                            <a href="{{ route('admin.service-orders.index') }}" class="text-sm font-medium text-primary hover:underline">Lihat semua order servis &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                             @endforelse
                         </div>
                         <div class="mt-4">
-                            <a href="{{ route('admin.reviews.index') }}" class="text-sm font-medium text-indigo-600 hover:underline">Lihat semua ulasan &rarr;</a>
+                            <a href="{{ route('admin.reviews.index') }}" class="text-sm font-medium text-primary hover:underline">Lihat semua ulasan &rarr;</a>
                         </div>
                     </div>
                 </div>

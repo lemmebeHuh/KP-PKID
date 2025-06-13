@@ -36,7 +36,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $complaint->customer ? $complaint->customer->name : 'N/A' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                                             @if($complaint->serviceOrder)
-                                                <a href="{{ route('admin.service-orders.show', $complaint->serviceOrder->id) }}" class="text-indigo-600 hover:text-indigo-900">
+                                                <a href="{{ route('admin.service-orders.show', $complaint->serviceOrder->id) }}" class="text-primary hover:text-indigo-900">
                                                     {{ $complaint->serviceOrder->service_order_number }}
                                                 </a>
                                             @else
@@ -51,7 +51,7 @@
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="{{ route('admin.complaints.edit', $complaint->id) }}" class="text-indigo-600 hover:text-indigo-900">Kelola/Lihat Detail</a>
+                                            <a href="{{ route('admin.complaints.edit', $complaint->id) }}" class="text-primary hover:text-indigo-900">Kelola/Lihat Detail</a>
                                             {{-- Tombol Hapus komplain (jika perlu) --}}
                                         </td>
                                     </tr>

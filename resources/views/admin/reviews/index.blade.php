@@ -42,7 +42,7 @@
                                 <tr class="hover:bg-gray-50">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $review->created_at->translatedFormat('d M Y') }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        @if($review->serviceOrder)<a href="{{ route('admin.service-orders.show', $review->serviceOrder->id) }}" class="text-indigo-600">{{ $review->serviceOrder->service_order_number }}</a>@else N/A @endif
+                                        @if($review->serviceOrder)<a href="{{ route('admin.service-orders.show', $review->serviceOrder->id) }}" class="text-primary">{{ $review->serviceOrder->service_order_number }}</a>@else N/A @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $review->customer->name ?? 'N/A' }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-yellow-400">

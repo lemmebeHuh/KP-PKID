@@ -97,7 +97,7 @@
     <table class="header-table">
         <tr>
             <td>
-                <img src="{{ public_path('images/pkid-logo.png') }}" alt="Logo" style="max-height: 60px; margin-bottom:10px;">
+                <img src="{{ public_path('images/logoP.png') }}" alt="Logo" style="max-height: 60px; margin-bottom:10px;">
             </td>
             <td class="company-details">
                 <h1>{{ $company_name ?? 'Pangkalan Komputer ID' }}</h1>

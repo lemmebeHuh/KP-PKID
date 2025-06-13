@@ -16,6 +16,36 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+             colors: {
+                'primary': '#004aad', // Warna utama Anda
+                'primary-dark': '#003b8a', // Warna hover yang sedikit lebih gelap
+            },
+            keyframes: {
+                'fade-in-up': {
+                    '0%': {
+                        opacity: '0',
+                        transform: 'translateY(20px)'
+                    },
+                    '100%': {
+                        opacity: '1',
+                        transform: 'translateY(0)'
+                    },
+                },
+                'gradient-xy': {
+                    '0%, 100%': {
+                        'background-size': '200% 200%',
+                        'background-position': 'left center'
+                    },
+                    '50%': {
+                        'background-size': '200% 200%',
+                        'background-position': 'right center'
+                    },
+                }
+            },
+            animation: {
+                'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+                'gradient-xy': 'gradient-xy 15s ease infinite',
+            }
         },
     },
 

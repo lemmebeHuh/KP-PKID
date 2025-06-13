@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Detail Order Servis Anda: ') }} {{ $serviceOrder->service_order_number }}
             </h2>
-            <a href="{{ route('pelanggan.dashboard') }}" class="text-sm text-indigo-600 hover:text-indigo-900">
+            <a href="{{ route('pelanggan.dashboard') }}" class="text-sm text-primary hover:text-indigo-900">
                 &larr; Kembali ke Riwayat Servis
             </a>
         </div>

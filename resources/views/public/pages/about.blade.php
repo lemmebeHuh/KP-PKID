@@ -22,7 +22,7 @@
             <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                 <div class="lg:pr-8 lg:pt-4">
                     <div class="lg:max-w-lg">
-                        <h2 class="text-base font-semibold leading-7 text-indigo-600">Sejarah Kami</h2>
+                        <h2 class="text-base font-semibold leading-7 text-primary">Sejarah Kami</h2>
                         <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Berawal dari Semangat & Garasi</p>
                         <p class="mt-6 text-lg leading-8 text-gray-600">
                             Pangkalan Komputer ID lahir pada tahun 2024 dari sebuah garasi kecil di Bandung. Didirikan oleh [Nama Pendiri], seorang teknisi dengan pengalaman bertahun-tahun dan semangat untuk memberikan layanan servis komputer yang jujur, transparan, dan berkualitas. Kami melihat banyaknya kebutuhan akan layanan servis yang bisa dipercaya, di mana pelanggan tidak hanya mendapatkan perbaikan, tetapi juga edukasi dan ketenangan pikiran.
@@ -30,7 +30,7 @@
                         <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                             <div class="relative pl-9">
                                 <dt class="inline font-semibold text-gray-900">
-                                    <svg class="absolute left-1 top-1 h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <svg class="absolute left-1 top-1 h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046a4.5 4.5 0 014.502 4.502A4.5 4.5 0 0117.5 17h-12a.5.5 0 010-1h12a3.5 3.5 0 10-6.95-2.402a3.513 3.513 0 00-3.05-2.402A3.5 3.5 0 006.5 13H5.5a.5.5 0 010 1h-1a.5.5 0 010-1H2.5a.5.5 0 010-1h1a.5.5 0 010 1h.5a.5.5 0 010 1H.5a.5.5 0 010-1h1.5a.5.5 0 010 1h.5a.5.5 0 010 1H.5a.5.5 0 01-.5-.5v-1a.5.5 0 01.5-.5h14a.5.5 0 010 1h-1.5a.5.5 0 010-1H6.5a.5.5 0 010-1h1a.5.5 0 010-1H5.5a.5.5 0 010-1zM2.5 12a.5.5 0 01.5-.5h14a.5.5 0 010 1h-14a.5.5 0 01-.5-.5z" clip-rule="evenodd" />
                                     </svg>
                                     Visi Kami.
@@ -39,7 +39,7 @@
                             </div>
                             <div class="relative pl-9">
                                 <dt class="inline font-semibold text-gray-900">
-                                     <svg class="absolute left-1 top-1 h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                     <svg class="absolute left-1 top-1 h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                          <path d="M4.75 3A1.75 1.75 0 003 4.75v10.5c0 .966.784 1.75 1.75 1.75h10.5A1.75 1.75 0 0017 15.25V4.75A1.75 1.75 0 0015.25 3H4.75zM8.75 6.25a.75.75 0 000 1.5h2.5a.75.75 0 000-1.5h-2.5zM7.5 10.75a.75.75 0 01.75-.75h4a.75.75 0 010 1.5h-4a.75.75 0 01-.75-.75zM7.75 13a.75.75 0 000 1.5h4a.75.75 0 000-1.5h-4z"/>
                                      </svg>
                                     Misi Kami.

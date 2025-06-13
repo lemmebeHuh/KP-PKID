@@ -17,14 +17,14 @@
                     @endif
 
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
-                        <a href="{{ route('admin.products.create') }}" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center">
+                        <a href="{{ route('admin.products.create') }}" class="w-full sm:w-auto bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded-lg inline-flex items-center">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                             Tambah Produk Baru
                         </a>
                         <div class="w-full sm:w-auto mt-4 sm:mt-0">
     <form action="{{ route('admin.products.index') }}" method="GET" class="flex">
-        <input type="text" name="search" class="w-full sm:w-64 border-gray-300 rounded-l-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" placeholder="Cari nama produk..." value="{{ request('search') }}">
-        <button type="submit" class="p-2 bg-indigo-600 text-white rounded-r-lg hover:bg-indigo-700">
+        <input type="text" name="search" class="w-full sm:w-64 border-gray-300 rounded-l-lg shadow-sm focus:border-primary focus:ring-primary text-sm" placeholder="Cari nama produk..." value="{{ request('search') }}">
+        <button type="submit" class="p-2 bg-primary text-white rounded-r-lg hover:bg-primary-dark">
             <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
         </button>
     </form>
