@@ -83,7 +83,7 @@ class ServiceOrderController extends Controller
             }
 
             // Buat password acak sederhana untuk pelanggan baru
-            $newPassword = Str::random(8); 
+            $newPassword = 'pkidsukses'; 
 
             $newCustomer = User::create([
                 'name' => $validatedData['new_customer_name'],
