@@ -341,10 +341,11 @@ class ServiceOrderController extends Controller
             $statusUpdated = true;
         }
 
-        if ($serviceOrder->wasChanged('status')) {
-        $customer = $serviceOrder->customer;
+        if ($serviceOrder->wasChanged('status')) { 
+        $customer = $serviceOrder->customer; // Ambil objek pelanggan dari relasi
         if ($customer) {
-            $customer->notify(new OrderStatusUpdatedNotification($serviceOrder));
+            // Kirim notifikasi ke pelanggan tersebut
+            $customer->notify(new OrderStatusUpdatedNotification($serviceOrder)); 
         }
     }
 

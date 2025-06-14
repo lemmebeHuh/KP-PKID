@@ -24,6 +24,7 @@ class NewComplaintSubmitted extends Notification
     {
         $customerName = $this->complaint->customer->name;
         return [
+            'type' => 'new_complaint',
             'complaint_id' => $this->complaint->id,
             'customer_name' => $customerName,
             'message' => "Komplain baru diterima dari {$customerName} dengan subjek: '{$this->complaint->subject}'.",

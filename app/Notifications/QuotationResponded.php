@@ -27,6 +27,7 @@ class QuotationResponded extends Notification
         $decisionText = ($decision === 'Approved') ? 'MENYETUJUI' : 'MENOLAK';
 
         return [
+            'type' => 'quotation_response',
             'order_id' => $this->serviceOrder->id,
             'order_number' => $this->serviceOrder->service_order_number,
             'message' => "Pelanggan {$customerName} telah {$decisionText} penawaran untuk order #{$this->serviceOrder->service_order_number}.",

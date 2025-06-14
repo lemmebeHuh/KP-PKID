@@ -32,6 +32,7 @@ class OrderStatusUpdatedNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'status_update',
             'order_id' => $this->serviceOrder->id,
             'order_number' => $this->serviceOrder->service_order_number,
             'message' => "Status servis untuk order #{$this->serviceOrder->service_order_number} telah diubah menjadi '{$this->serviceOrder->status}'.",

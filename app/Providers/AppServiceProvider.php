@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Bagikan data notifikasi ke view navigation
-        View::composer('layouts.navigation', function ($view) {
+        View::composer('layouts.partials.notification-bell', function ($view) {
         if (Auth::check()) {
             $view->with('unreadNotifications', Auth::user()->unreadNotifications);
         }

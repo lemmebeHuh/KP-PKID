@@ -25,6 +25,7 @@ class NewReviewSubmitted extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'type' => 'new_review',
             'review_id' => $this->review->id,
             'customer_name' => $this->review->customer->name,
             'rating' => $this->review->rating,
