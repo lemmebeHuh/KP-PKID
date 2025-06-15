@@ -142,10 +142,27 @@ class DashboardController extends Controller
             }
         ]);
 
+        // --- LOGIKA UNTUK LOGO BASE64 ---
+        $logoPath = public_path('images/pkid-logo.png'); // Pastikan path dan nama file 100% benar
+        $logoBase64 = null;
+
+        if (file_exists($logoPath)) {
+            try {
+                $logoType = pathinfo($logoPath, PATHINFO_EXTENSION);
+                $logoData = file_get_contents($logoPath);
+                $logoBase64 = 'data:image/' . $logoType . ';base64,' . base64_encode($logoData);
+            } catch (\Exception $e) {
+                // Jika gagal membaca file, logo akan tetap null
+                // dan tidak akan ditampilkan di PDF.
+                // Ini mencegah error 500 jika file rusak atau tidak bisa dibaca.
+            }
+        }
+
         // Data yang akan dikirim ke view PDF
         $data = [
         'serviceOrder' => $serviceOrder,
         'title' => 'Bukti Servis - ' . $serviceOrder->service_order_number,
+        'logoBase64' => $logoBase64,
         'company_name' => 'Pangkalan Komputer ID',
         'company_address' => 'Jl. Sersan Sodik No.57 RT03, RW.2, Gg. Kelinci VI, Kec. Sukasari, Kota Bandung, Jawa Barat', // Ganti dengan alamat asli
         'company_phone' => '0895-4157-18458',
@@ -170,36 +187,28 @@ class DashboardController extends Controller
         }
 
         // Validasi: Pastikan pelanggan belum pernah mereview order ini
-        $existingReview = Review::where('service_order_id', $serviceOrder->id)
-                                ->where('customer_id', Auth::id())
-                                ->first();
+        $existingReview = Review::where('service_order_id', $serviceOrder->id)->first();
         if ($existingReview) {
             return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
                              ->with('error', 'Anda sudah pernah memberikan ulasan untuk order servis ini.');
         }
 
+        // Validasi input dari form
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'comment' => 'nullable|string|max:1000',
         ]);
 
-        Review::create([
+        // BUAT REVIEW HANYA SATU KALI dan simpan hasilnya ke variabel
+        $newReview = Review::create([
             'service_order_id' => $serviceOrder->id,
             'customer_id' => Auth::id(),
             'rating' => $validated['rating'],
             'comment' => $validated['comment'],
-            'is_approved' => true, // Langsung approve, atau set false jika perlu moderasi Admin
+            'is_approved' => true, // Langsung approve
         ]);
 
-            $newReview = Review::create([ // Simpan review baru ke variabel $newReview
-            'service_order_id' => $serviceOrder->id,
-            'customer_id' => Auth::id(),
-            'rating' => $validated['rating'],
-            'comment' => $validated['comment'],
-            'is_approved' => true,
-        ]);
-
-        // Kirim Notifikasi ke semua Admin
+        // Kirim Notifikasi ke semua Admin menggunakan $newReview yang baru dibuat
         $admins = User::whereHas('role', function ($query) {
             $query->where('name', 'Admin');
         })->get();
@@ -231,22 +240,20 @@ class DashboardController extends Controller
     public function storeComplaint(Request $request, ServiceOrder $serviceOrder)
     {
         // Autorisasi: Pastikan order ini milik pelanggan yang sedang login
+        // Otorisasi: Pastikan order ini milik pelanggan yang sedang login
         if ($serviceOrder->customer_id !== Auth::id()) {
-            abort(403, 'AKSI TIDAK DIIZINKAN.');
+            abort(403);
         }
 
-        // Validasi: Hanya boleh komplain jika status Completed atau Picked Up
-        if (!in_array($serviceOrder->status, ['Completed', 'Picked Up'])) {
-             return redirect()->route('pelanggan.service-orders.show', $serviceOrder->id)
-                             ->with('error', 'Anda hanya bisa mengajukan komplain untuk servis yang sudah selesai.');
-        }
-
+        // Validasi input dari form
         $validated = $request->validate([
             'subject' => 'required|string|max:255',
-            'description' => 'required|string|max:2000', // Batasi panjang deskripsi
+            'description' => 'required|string|max:2000',
         ]);
 
-        Complaint::create([
+        // BUAT KOMPLAIN HANYA SATU KALI
+        // dan simpan hasilnya ke variabel $newComplaint
+        $newComplaint = Complaint::create([
             'service_order_id' => $serviceOrder->id,
             'customer_id' => Auth::id(),
             'subject' => $validated['subject'],
@@ -254,15 +261,7 @@ class DashboardController extends Controller
             'status' => 'Open', // Status awal komplain
         ]);
 
-        $newComplaint = Complaint::create([ // Simpan ke variabel $newComplaint
-        'service_order_id' => $serviceOrder->id,
-        'customer_id' => Auth::id(),
-        'subject' => $validated['subject'],
-        'description' => $validated['description'],
-        'status' => 'Open',
-         ]);
-
-        // Kirim Notifikasi ke semua Admin
+        // Kirim Notifikasi ke semua Admin menggunakan $newComplaint yang baru dibuat
         $admins = User::whereHas('role', function ($query) {
             $query->where('name', 'Admin');
         })->get();

@@ -1,10 +1,15 @@
 <x-app-layout>
+    <x-slot name="title">{{ 'Detail Servis ' . $serviceOrder->service_order_number }}</x-slot>
+
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Detail Order Servis Anda: ') }} {{ $serviceOrder->service_order_number }}
-            </h2>
-            <a href="{{ route('pelanggan.dashboard') }}" class="text-sm text-primary hover:text-indigo-900">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Detail Servis Anda') }}
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">Nomor Order: {{ $serviceOrder->service_order_number }}</p>
+            </div>
+            <a href="{{ route('pelanggan.dashboard') }}" class="mt-2 sm:mt-0 text-sm font-medium text-primary hover:text-primary-dark">
                 &larr; Kembali ke Riwayat Servis
             </a>
         </div>
@@ -12,22 +17,129 @@
 
     <div class="py-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            {{-- @if (session('success'))
-            <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                {{ session('success') }}
-            </div>
+            {{-- Notifikasi Sukses/Error --}}
+            @if (session('success'))
+                <div class="mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md shadow-sm" role="alert">
+                    <p>{{ session('success') }}</p>
+                </div>
             @endif
             @if (session('error'))
-            <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                {{ session('error') }}
-            </div>
-            @endif --}}
+                <div class="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md shadow-sm" role="alert">
+                    <p>{{ session('error') }}</p>
+                </div>
+            @endif
 
-            <div class="bg-white p-6 sm:p-8 rounded-lg shadow-lg space-y-6">
-                {{-- Informasi Utama Order (Sama seperti halaman publik/admin show, bisa disesuaikan) --}}
+            {{-- Grid Utama --}}
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+
+                {{-- Kolom Kiri: Informasi & Aksi --}}
+                <div class="lg:col-span-1 space-y-6">
+
+                    {{-- Kartu Status & Keterangan --}}
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                        @php
+                            $statusInfo = [
+                                'color' => 'bg-gray-100 text-gray-800',
+                                'description' => 'Status tidak dikenali.',
+                            ];
+                            switch ($serviceOrder->status) {
+                                case 'Pending':
+                                case 'Menunggu Diagnosa':
+                                    $statusInfo = ['color' => 'bg-yellow-100 text-yellow-800', 'description' => 'Kami telah menerima perangkat Anda dan akan segera melakukan diagnosa awal.'];
+                                    break;
+                                case 'In Progress':
+                                case 'Diagnosing':
+                                case 'Pengujian':
+                                    $statusInfo = ['color' => 'bg-blue-100 text-blue-800', 'description' => 'Perangkat Anda sedang dalam proses pengerjaan oleh teknisi ahli kami.'];
+                                    break;
+                                case 'Menunggu Sparepart':
+                                    $statusInfo = ['color' => 'bg-orange-100 text-orange-800', 'description' => 'Kami sedang menunggu komponen pengganti tiba untuk melanjutkan perbaikan.'];
+                                    break;
+                                case 'Menunggu Persetujuan Pelanggan':
+                                    $statusInfo = ['color' => 'bg-orange-100 text-orange-800', 'description' => 'Kami memerlukan persetujuan Anda untuk melanjutkan. Silakan periksa detail penawaran di bawah.'];
+                                    break;
+                                case 'Completed':
+                                    $statusInfo = ['color' => 'bg-green-100 text-green-800', 'description' => 'Kabar baik! Perangkat Anda telah selesai diperbaiki dan siap untuk diambil.'];
+                                    break;
+                                case 'Picked Up':
+                                    $statusInfo = ['color' => 'bg-gray-200 text-gray-800', 'description' => 'Servis telah selesai dan perangkat sudah Anda ambil. Terima kasih!'];
+                                    break;
+                                case 'Cancelled':
+                                case 'Quotation Ditolak':
+                                    $statusInfo = ['color' => 'bg-red-100 text-red-800', 'description' => 'Proses servis dibatalkan sesuai permintaan atau kondisi.'];
+                                    break;
+                            }
+                        @endphp
+                        <h3 class="text-base font-semibold text-gray-500">Status Terkini</h3>
+                        <p class="mt-1 px-4 py-2 text-lg font-bold rounded-full text-center {{ $statusInfo['color'] }}">
+                            {{ $serviceOrder->status }}
+                        </p>
+                        <p class="mt-3 text-sm text-gray-600">{{ $statusInfo['description'] }}</p>
+                    </div>
+
+                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                    @if($serviceOrder->quotation_details)
                 <section>
-                    <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Informasi Order</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                    <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Detail Diagnosa & Penawaran Biaya
+                    </h3>
+                    <div class="p-4 bg-yellow-50 border border-yellow-300 rounded-md text-sm">
+                        <p class="whitespace-pre-wrap">{{ $serviceOrder->quotation_details }}</p>
+                        @if($serviceOrder->final_cost)
+                        <p class="mt-2 font-semibold">Estimasi/Final Biaya: Rp {{
+                            number_format($serviceOrder->final_cost, 0, ',', '.') }}</p>
+                        @endif
+                    </div>
+
+                    @if($serviceOrder->status == 'Menunggu Persetujuan Pelanggan' &&
+                    ($serviceOrder->customer_approval_status == 'Pending' ||
+                    is_null($serviceOrder->customer_approval_status)) )
+                    
+                    @elseif($serviceOrder->customer_approval_status)
+                    <p class="mt-3 text-sm">Status Persetujuan Anda: <span class="font-semibold">{{
+                            $serviceOrder->customer_approval_status }}</span></p>
+                    @endif
+                </section>
+                @endif
+                    </div>
+
+                    {{-- Kartu Aksi Persetujuan Quotation --}}
+                    @if($serviceOrder->status == 'Menunggu Persetujuan Pelanggan' && ($serviceOrder->customer_approval_status == 'Pending' || is_null($serviceOrder->customer_approval_status)) )
+                        <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6 border-2 border-primary">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Tindakan Diperlukan</h3>
+                            <p class="text-sm text-gray-600 mb-4">Silakan setujui atau tolak penawaran untuk melanjutkan proses.</p>
+                            <div class="space-y-2">
+                                <form action="{{ route('pelanggan.service-orders.respond-quotation', $serviceOrder->id) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="decision" value="Approved">
+                                    <button type="submit" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">Setuju</button>
+                                </form>
+                                <form action="{{ route('pelanggan.service-orders.respond-quotation', $serviceOrder->id) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="decision" value="Rejected">
+                                    <button type="submit" class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Tolak</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Kartu Aksi Pasca-Servis --}}
+                    @if(in_array($serviceOrder->status, ['Completed', 'Picked Up']))
+                        <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Layanan Pasca-Servis</h3>
+                            <div class="space-y-3">
+                                <a href="{{ route('pelanggan.service-orders.download-pdf', $serviceOrder->id) }}" target="_blank" class="w-full block text-center bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">Download Bukti PDF</a>
+                                @if(!$existingReview)
+                                    <a href="#form-ulasan" onclick="document.getElementById('form-ulasan').scrollIntoView({ behavior: 'smooth' });" class="w-full block text-center bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg">Beri Ulasan</a>
+                                @endif
+                                 <a href="{{ route('pelanggan.service-orders.complaints.create', $serviceOrder->id) }}" class="w-full block text-center bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-lg">Ajukan Komplain</a>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Kartu Detail Perangkat --}}
+                     <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                         <h3 class="text-lg font-semibold text-gray-800 border-b pb-3 mb-4">Detail Perangkat</h3>
+                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
                         <div><strong>No. Servis:</strong> {{ $serviceOrder->service_order_number }}</div>
                         <div><strong>Status Saat Ini:</strong> <span
                                 class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{{
@@ -50,111 +162,62 @@
                         @endif
                         @endif
                     </div>
-                    <div class="mt-2 text-sm">
-                        <strong>Keluhan Awal:</strong>
-                        <p class="text-gray-600 whitespace-pre-wrap">{{ $serviceOrder->problem_description }}</p>
-                    </div>
-                    <div class="mt-2 text-sm">
-                        <strong>Kelengkapan Diterima:</strong>
-                        <p class="text-gray-600 whitespace-pre-wrap">{{ $serviceOrder->accessories_received ?: '-' }}
-                        </p>
-                    </div>
-                </section>
-
-                {{-- Detail Diagnosa & Quotation --}}
-                @if($serviceOrder->quotation_details)
-                <section>
-                    <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Detail Diagnosa & Penawaran Biaya
-                    </h3>
-                    <div class="p-4 bg-yellow-50 border border-yellow-300 rounded-md text-sm">
-                        <p class="whitespace-pre-wrap">{{ $serviceOrder->quotation_details }}</p>
-                        @if($serviceOrder->final_cost)
-                        <p class="mt-2 font-semibold">Estimasi/Final Biaya: Rp {{
-                            number_format($serviceOrder->final_cost, 0, ',', '.') }}</p>
-                        @endif
+                    
+                     </div>
+                     <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                     
+                </div>
                     </div>
 
-                    {{-- Form Persetujuan/Penolakan akan ada di sini --}}
-                    @if($serviceOrder->status == 'Menunggu Persetujuan Pelanggan' &&
-                    ($serviceOrder->customer_approval_status == 'Pending' ||
-                    is_null($serviceOrder->customer_approval_status)) )
-                    <div class="mt-4 pt-4 border-t">
-                        <h4 class="font-semibold mb-2">Tindakan Anda:</h4>
-                        <p class="text-sm mb-3">Silakan setujui atau tolak penawaran biaya dan pekerjaan yang diusulkan
-                            di atas.</p>
 
-                        {{-- Form untuk SETUJU --}}
-                        <form action="{{ route('pelanggan.service-orders.respond-quotation', $serviceOrder->id) }}"
-                            method="POST" class="inline-block mr-2">
-                            @csrf
-                            <input type="hidden" name="decision" value="Approved">
-                            <button type="submit"
-                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                Setuju dengan Penawaran
-                            </button>
-                        </form>
+                {{-- Kolom Kanan: Timeline Riwayat --}}
+                <div class="lg:col-span-2">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900">
+                            <h3 class="text-lg font-semibold mb-6 border-b pb-3">Riwayat Progres Servis</h3>
+                            @if($serviceOrder->updates && $serviceOrder->updates->count() > 0)
+                                <ol class="relative border-l-2 border-indigo-200 ml-3">                  
+                                    @foreach($serviceOrder->updates as $update)
+                                    <li class="mb-10 ml-6">            
+                                        <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3.5 ring-8 ring-white">
+                                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4zM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10zM5 13h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2z"/></svg>
+                                        </span>
+                                        <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm">
+                                            <div class="flex items-center justify-between mb-2">
+                                                <p class="text-sm font-semibold text-gray-900">{{ $update->notes }}</p>
+                                                <time class="text-xs font-normal text-gray-400">{{ $update->created_at->diffForHumans() }}</time>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mb-2">Oleh: {{ $update->updatedBy?->name ?? 'Sistem' }}</p>
+                                            @if($update->status_from && $update->status_to && $update->status_from !== $update->status_to)
+                                                <p class="text-xs text-blue-600">Status diubah menjadi: <span class="font-semibold">{{ $update->status_to }}</span></p>
+                                            @endif
+                                            @if(isset($serviceOrder->quotation_details) && $update->update_type == 'Hasil Diagnosa') {{-- Contoh penanda khusus --}}
+                                            <div class="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                                                <h4 class="font-semibold text-sm text-yellow-800">Detail Diagnosa & Penawaran</h4>
+                                                <p class="text-sm text-gray-700 whitespace-pre-wrap">{{ $serviceOrder->quotation_details }}</p>
+                                            </div>
+                                            @endif
 
-                        {{-- Form untuk TOLAK --}}
-                        <form action="{{ route('pelanggan.service-orders.respond-quotation', $serviceOrder->id) }}"
-                            method="POST" class="inline-block mt-2 sm:mt-0">
-                            @csrf
-                            <input type="hidden" name="decision" value="Rejected">
-                            <button type="submit"
-                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                Tolak Penawaran
-                            </button>
-                        </form>
-                    </div>
-                    @elseif($serviceOrder->customer_approval_status)
-                    <p class="mt-3 text-sm">Status Persetujuan Anda: <span class="font-semibold">{{
-                            $serviceOrder->customer_approval_status }}</span></p>
-                    @endif
-                </section>
-                @endif
-
-                {{-- Riwayat Update Progres (Sama seperti halaman publik/admin show) --}}
-                <section>
-                    <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Riwayat Progres Perbaikan</h3>
-                    @if($serviceOrder->updates && $serviceOrder->updates->count() > 0)
-                    <div class="space-y-4">
-                        @foreach($serviceOrder->updates as $update)
-                        <div class="border rounded-md p-3 text-sm bg-gray-50">
-                            <p class="font-semibold">{{ $update->update_type ?: 'Update' }} - <span
-                                    class="font-normal text-gray-600">{{ $update->created_at->format('d M Y, H:i')
-                                    }}</span></p>
-                            @if($update->updatedBy)
-                            <p class="text-xs text-gray-500">Oleh: {{ $update->updatedBy->name }}</p>
-                            @endif
-                            @if($update->status_from || $update->status_to)
-                            @if ($update->status_from !== $update->status_to)
-                            <p class="text-xs text-blue-600">Status: {{ $update->status_from ?: 'N/A' }} &rarr; {{
-                                $update->status_to ?: 'N/A' }}</p>
-                            @endif
-                            @endif
-                            <p class="mt-1 whitespace-pre-wrap">{{ $update->notes }}</p>
-                            @if($update->photos && $update->photos->count() > 0)
-                            <div class="mt-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                                @foreach($update->photos as $photo)
-                                <a href="{{ asset('storage/' . $photo->file_path) }}"
-                                    data-lightbox="order-{{$serviceOrder->service_order_number}}-update-{{$update->id}}"
-                                    data-title="{{ $photo->caption ?: $update->notes }}">
-                                    <img src="{{ asset('storage/' . $photo->file_path) }}"
-                                        alt="{{ $photo->caption ?: 'Bukti Foto' }}"
-                                        class="h-20 w-full object-cover rounded shadow hover:shadow-md transition-shadow">
-                                </a>
-                                @endforeach
-                            </div>
+                                            @if($update->photos && $update->photos->count() > 0)
+                                                <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                                    @foreach($update->photos as $photo)
+                                                    <a href="{{ asset('storage/' . $photo->file_path) }}" data-lightbox="order-{{$serviceOrder->id}}" data-title="{{ $update->notes }}">
+                                                        <img src="{{ asset('storage/' . $photo->file_path) }}" alt="Bukti Foto" class="h-24 w-full object-cover rounded-md shadow hover:shadow-lg transition-shadow">
+                                                    </a>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </li>
+                                    @endforeach
+                                </ol>
+                            @else
+                                <p class="text-sm text-center text-gray-500 py-4">Belum ada update progres untuk order servis ini.</p>
                             @endif
                         </div>
-                        @endforeach
                     </div>
-                    @else
-                    <p class="text-sm text-gray-500">Belum ada update progres untuk order servis ini.</p>
-                    @endif
-                </section>
-
-                {{-- Informasi Garansi jika ada (Sama seperti halaman publik/admin show) --}}
-                @if($serviceOrder->warranty)
+                    {{-- Seksi Ulasan (jika sudah selesai) --}}
+                    @if($serviceOrder->warranty)
                 <section class="mt-6 pt-6 border-t">
                     <h3 class="text-lg font-semibold border-b pb-2 mb-3 text-gray-700">Informasi Garansi Servis</h3>
                     <div class="text-sm space-y-1">
@@ -251,32 +314,12 @@
                     @endif
                 </section>
                 @endif
-
-                {{-- Tombol Aksi Lain untuk Pelanggan (Download PDF, Review - NANTI) --}}
-                @if($serviceOrder->status == 'Completed' || $serviceOrder->status == 'Picked Up')
-                <div class="mt-6 pt-4 border-t">
-                    <h4 class="font-semibold mb-2">Aksi Lainnya:</h4>
-                    <a href="{{ route('pelanggan.service-orders.download-pdf', $serviceOrder->id) }}" target="_blank"
-                        {{-- Buka di tab baru agar tidak meninggalkan halaman --}}
-                        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2 text-sm">
-                        Download Bukti Servis (PDF)
-                    </a>
-                    {{-- Tombol Beri Review (Nanti) --}}
-                    {{-- <a href="#"
-                        class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded text-sm">Beri
-                        Ulasan
-                    </a> --}}
-
-                    {{-- Tombol/Link Ajukan Komplain --}}
-                    <a href="{{ route('pelanggan.service-orders.complaints.create', $serviceOrder->id) }}" {{-- Rute ini
-                        akan kita buat --}}
-                        class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded text-sm">
-                        Ajukan Komplain
-                    </a>
                 </div>
-                @endif
-
             </div>
         </div>
     </div>
 </x-app-layout>
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+@endpush

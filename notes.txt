@@ -19,3 +19,38 @@ tapi saya rasa tetap saja seperti itum, karena kontrol harga, detail diagnosa da
 
 
 PDF MASIH EEEROR, ini tinggal ganti folder project
+
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                        <div><strong>No. Servis:</strong> {{ $serviceOrder->service_order_number }}</div>
+                        <div><strong>Status Saat Ini:</strong> <span
+                                class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{{
+                                $serviceOrder->status }}</span></div>
+                        <div><strong>Perangkat:</strong> {{ $serviceOrder->device_type }} {{
+                            $serviceOrder->device_brand_model ? '('.$serviceOrder->device_brand_model.')' : '' }}</div>
+                        <div><strong>Tgl Diterima:</strong> {{ $serviceOrder->date_received ?
+                            $serviceOrder->date_received->format('d M Y, H:i') : '-' }}</div>
+                        <div><strong>Teknisi:</strong> {{ $serviceOrder->technician ? $serviceOrder->technician->name :
+                            '-' }}</div>
+                        <div><strong>Estimasi Selesai:</strong> {{ $serviceOrder->estimated_completion_date ?
+                            \Carbon\Carbon::parse($serviceOrder->estimated_completion_date)->format('d M Y') : '-' }}
+                        </div>
+                        @if($serviceOrder->status === 'Completed' || $serviceOrder->status === 'Picked Up')
+                        <div><strong>Tgl Selesai Aktual:</strong> {{ $serviceOrder->date_completed ?
+                            $serviceOrder->date_completed->format('d M Y, H:i') : 'Belum Selesai' }}</div>
+                        @if($serviceOrder->status === 'Picked Up')
+                        <div><strong>Tgl Diambil:</strong> {{ $serviceOrder->date_picked_up ?
+                            $serviceOrder->date_picked_up->format('d M Y, H:i') : '-' }}</div>
+                        @endif
+                        @endif
+                    </div>
+                    <div class="mt-2 text-sm">
+                        <strong>Keluhan Awal:</strong>
+                        <p class="text-gray-600 whitespace-pre-wrap">{{ $serviceOrder->problem_description }}</p>
+                    </div>
+                    <div class="mt-2 text-sm">
+                        <strong>Kelengkapan Diterima:</strong>
+                        <p class="text-gray-600 whitespace-pre-wrap">{{ $serviceOrder->accessories_received ?: '-' }}
+                        </p>
+                    </div>

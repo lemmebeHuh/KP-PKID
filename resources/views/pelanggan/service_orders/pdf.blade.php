@@ -45,7 +45,13 @@
                     <table>
                         <tr>
                             <td class="title">
-                                <img src="{{ public_path('images/logoP.png') }}" alt="">
+                                @if(isset($logoBase64) && $logoBase64)
+        {{-- Menggunakan data Base64 sebagai src --}}
+        <img src="{{ $logoBase64 }}" alt="Logo" style="max-width: 150px; max-height: 50px;">
+    @else
+        {{-- Fallback jika gambar tidak ada/gagal di-load --}}
+        <h2 style="font-size: 20px; margin: 0;">Pangkalan Komputer ID</h2>
+    @endif
                             </td>
                             <td class="text-right">
                                 <strong style="font-size: 20px;">BUKTI SERVIS</strong><br>
