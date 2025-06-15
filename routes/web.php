@@ -19,7 +19,7 @@ use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\ArticleController as PublicArticleController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
-
+use Illuminate\Support\Facades\App;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -134,4 +134,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
+Route::get('/test-pdf', function () {
+    try {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Tes PDF Berhasil!</h1><p>Jika halaman ini muncul, artinya library DomPDF sudah berfungsi dengan benar.</p>');
+        return $pdf->stream('test.pdf');
+    } catch (Exception $e) {
+        // Jika ada error, tampilkan di sini
+        dd($e->getMessage());
+    }
+});
+
+Route::get('/test-image', function () {
+    $path = public_path('images/logoP.png');
+
+    $fileExists = file_exists($path);
+
+    dd(
+        'Path yang dihasilkan oleh public_path():', $path,
+        'Apakah file ditemukan di path tersebut?:', $fileExists ? 'YA, DITEMUKAN' : 'TIDAK, INILAH MASALAHNYA!'
+    );
+});
 require __DIR__.'/auth.php';

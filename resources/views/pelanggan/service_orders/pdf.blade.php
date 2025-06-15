@@ -1,175 +1,142 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ $title ?? 'Bukti Servis' }}</title>
     <style>
-        @page { margin: 25px; }
+        @page { margin: 0; }
         body { 
-            font-family: 'Helvetica', 'DejaVu Sans', sans-serif; 
-            font-size: 10px; 
+            font-family: 'Helvetica', sans-serif; 
+            font-size: 11px; 
             color: #333;
-        }
-        .header-table {
-            width: 100%;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-        }
-        .header-table td {
-            vertical-align: top;
-        }
-        .company-logo {
-            max-height: 50px;
-        }
-        .company-details {
-            text-align: right;
-        }
-        .company-details h1 {
             margin: 0;
-            font-size: 16px;
-            color: #000;
         }
-        .document-title {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .info-table {
-            width: 100%;
-            margin-bottom: 20px;
-            border-collapse: collapse;
-        }
-        .info-table td {
-            vertical-align: top;
-            padding: 5px;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        .section-title {
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
             font-size: 12px;
-            font-weight: bold;
-            background-color: #f2f2f2;
-            padding: 8px;
-            border-radius: 4px;
-            margin-bottom: 10px;
+            line-height: 18px;
         }
-        .content-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .content-table th, .content-table td {
-            border: 1px solid #ddd;
-            padding: 6px;
-            text-align: left;
-            vertical-align: top;
-        }
-        .content-table th {
-            background-color: #f9f9f9;
-            font-weight: bold;
-        }
-        .whitespace-pre-wrap {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .footer {
-            position: fixed;
-            bottom: -10px;
-            left: 0px;
-            right: 0px;
-            height: 50px;
-            text-align: center;
-            font-size: 9px;
-            color: #777;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
-        .text-right {
-            text-align: right;
-        }
+        table { width: 100%; line-height: inherit; text-align: left; border-collapse: collapse; }
+        table td { padding: 5px; vertical-align: top; }
+        table tr.top table td { padding-bottom: 20px; }
+        table tr.top table td.title { font-size: 30px; line-height: 30px; color: #333; }
+        table tr.information table td { padding-bottom: 30px; }
+        table tr.heading td { background: #eee; border-bottom: 1px solid #ddd; font-weight: bold; }
+        table tr.details td { padding-bottom: 20px; }
+        table tr.item td { border-bottom: 1px solid #eee; }
+        table tr.item.last td { border-bottom: none; }
+        table tr.total td:nth-child(2) { border-top: 2px solid #eee; font-weight: bold; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .company-logo { max-width: 150px; max-height: 60px; }
+        .section-title { font-size: 14px; font-weight: bold; margin-top: 20px; margin-bottom: 10px; color: #004aad; }
+        .footer { font-size: 9px; text-align: center; color: #777; margin-top: 30px; }
+        .whitespace-pre-wrap { white-space: pre-wrap; word-wrap: break-word; }
     </style>
 </head>
 <body>
-    {{-- HEADER --}}
-    <table class="header-table">
-        <tr>
-            <td>
-                <img src="{{ public_path('images/logoP.png') }}" alt="Logo" style="max-height: 60px; margin-bottom:10px;">
-            </td>
-            <td class="company-details">
-                <h1>{{ $company_name ?? 'Pangkalan Komputer ID' }}</h1>
-                <p>{{ $company_address ?? 'Alamat Perusahaan' }}</p>
-                <p>Telp: {{ $company_phone ?? 'Nomor Telepon' }}</p>
-            </td>
-        </tr>
-    </table>
-
-    <div class="document-title">BUKTI SERVIS</div>
-
-    {{-- INFORMASI ORDER & PELANGGAN --}}
-    <div class="section">
-        <table class="info-table">
-            <tr>
-                <td style="width: 50%;">
-                    <strong>No. Servis:</strong> {{ $serviceOrder->service_order_number }}<br>
-                    <strong>Tanggal Diterima:</strong> {{ $serviceOrder->date_received ? $serviceOrder->date_received->format('d M Y') : '-' }}<br>
-                    <strong>Tanggal Selesai:</strong> {{ $serviceOrder->date_completed ? $serviceOrder->date_completed->format('d M Y') : '-' }}<br>
-                    <strong>Status Terkini:</strong> {{ $serviceOrder->status }}
-                </td>
-                <td style="width: 50%;">
-                    <strong>Pelanggan:</strong> {{ $serviceOrder->customer ? $serviceOrder->customer->name : 'N/A' }}<br>
-                    <strong>Email:</strong> {{ $serviceOrder->customer ? $serviceOrder->customer->email : 'N/A' }}<br>
-                    <strong>No. HP:</strong> {{ $serviceOrder->customer && $serviceOrder->customer->phone_number ? $serviceOrder->customer->phone_number : '-' }}
+    <div class="invoice-box">
+        {{-- BAGIAN HEADER --}}
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <img src="{{ public_path('images/logoP.png') }}" alt="">
+                            </td>
+                            <td class="text-right">
+                                <strong style="font-size: 20px;">BUKTI SERVIS</strong><br>
+                                No. Servis: {{ $serviceOrder->service_order_number }}<br>
+                                Dibuat: {{ now()->translatedFormat('d F Y') }}
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
-        </table>
-    </div>
-
-    {{-- DETAIL PERANGKAT & KELUHAN --}}
-    <div class="section">
-        <div class="section-title">Detail Perangkat & Keluhan</div>
-        <table class="content-table">
-            <tr><th style="width: 30%;">Jenis Perangkat</th><td>{{ $serviceOrder->device_type }}</td></tr>
-            <tr><th>Merk/Model</th><td>{{ $serviceOrder->device_brand_model ?: '-' }}</td></tr>
-            <tr><th>Kelengkapan Diterima</th><td>{{ $serviceOrder->accessories_received ?: '-' }}</td></tr>
-            <tr><th>Keluhan Awal</th><td class="whitespace-pre-wrap">{{ $serviceOrder->problem_description }}</td></tr>
-        </table>
-    </div>
-
-    {{-- RINGKASAN PEKERJAAN & BIAYA --}}
-    <div class="section">
-        <div class="section-title">Ringkasan Pekerjaan & Biaya</div>
-        <table class="content-table">
-            <tr>
-                <th style="width: 30%;">Hasil Diagnosa & Pekerjaan</th>
-                <td class="whitespace-pre-wrap">{{ $serviceOrder->quotation_details ?: 'Tidak ada catatan diagnosa detail.' }}</td>
-            </tr>
-             <tr>
-                <th>Biaya Final</th>
-                <td><strong>{{ $serviceOrder->final_cost ? 'Rp ' . number_format($serviceOrder->final_cost, 0, ',', '.') : 'Belum ditentukan' }}</strong></td>
+            <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                <strong>Ditujukan Kepada:</strong><br>
+                                {{ $serviceOrder->customer?->name ?? 'N/A' }}<br>
+                                {{ $serviceOrder->customer?->email ?? '' }}<br>
+                                {{ $serviceOrder->customer?->phone_number ?? '' }}
+                            </td>
+                            <td class="text-right">
+                                <strong>Pangkalan Komputer ID</strong><br>
+                                {{ $company_address ?? 'Alamat Perusahaan Anda' }}<br>
+                                {{ $company_phone ?? 'Nomor Telepon Anda' }}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
         </table>
-    </div>
+        
+        {{-- DETAIL PERANGKAT & KELUHAN --}}
+        <div class="section-title">Detail Perangkat</div>
+        <table cellpadding="0" cellspacing="0">
+            <tr class="heading">
+                <td>Item</td>
+                <td>Keterangan</td>
+            </tr>
+            <tr class="item">
+                <td>Jenis Perangkat</td>
+                <td>{{ $serviceOrder->device_type }}</td>
+            </tr>
+            <tr class="item">
+                <td>Merk / Model</td>
+                <td>{{ $serviceOrder->device_brand_model ?: '-' }}</td>
+            </tr>
+             <tr class="item">
+                <td>Kelengkapan Diterima</td>
+                <td>{{ $serviceOrder->accessories_received ?: '-' }}</td>
+            </tr>
+            <tr class="details">
+                <td>Keluhan Awal</td>
+                <td class="whitespace-pre-wrap">{{ $serviceOrder->problem_description }}</td>
+            </tr>
+        </table>
 
-    {{-- INFORMASI GARANSI --}}
-    @if($serviceOrder->warranty)
-    <div class="section">
+        {{-- RINGKASAN PEKERJAAN & BIAYA --}}
+        <div class="section-title">Ringkasan Pekerjaan</div>
+         <table cellpadding="0" cellspacing="0">
+            <tr class="heading">
+                <td>Deskripsi Pekerjaan</td>
+                <td class="text-right">Biaya</td>
+            </tr>
+            <tr class="item">
+                <td class="whitespace-pre-wrap">
+                    <strong>Hasil Diagnosa & Tindakan Perbaikan:</strong><br>
+                    {{ $serviceOrder->quotation_details ?: 'Tidak ada catatan diagnosa atau pekerjaan detail.' }}
+                </td>
+                <td class="text-right">{{ $serviceOrder->final_cost ? 'Rp ' . number_format($serviceOrder->final_cost, 0, ',', '.') : 'Rp 0' }}</td>
+            </tr>
+            <tr class="total">
+                <td class="text-right"><strong>Total Biaya Final:</strong></td>
+                <td class="text-right"><strong>{{ $serviceOrder->final_cost ? 'Rp ' . number_format($serviceOrder->final_cost, 0, ',', '.') : 'Rp 0' }}</strong></td>
+            </tr>
+        </table>
+
+        {{-- INFORMASI GARANSI --}}
+        @if($serviceOrder->warranty)
         <div class="section-title">Informasi Garansi</div>
-         <table class="content-table">
-            <tr><th style="width: 30%;">Masa Berlaku</th><td>{{ \Carbon\Carbon::parse($serviceOrder->warranty->start_date)->translatedFormat('d F Y') }} s/d {{ \Carbon\Carbon::parse($serviceOrder->warranty->end_date)->translatedFormat('d F Y') }}</td></tr>
-            <tr><th>Syarat & Ketentuan</th><td class="whitespace-pre-wrap">{{ $serviceOrder->warranty->terms ?: '-' }}</td></tr>
-        </table>
-    </div>
-    @endif
-
-    {{-- FOOTER --}}
-    <div class="footer">
-        Terima kasih telah mempercayakan layanan Anda kepada Pangkalan Komputer ID.
-        <br>
-        Dokumen ini dicetak otomatis oleh sistem pada {{ now()->translatedFormat('d F Y H:i:s') }}.
+        <div style="font-size: 11px;">
+            <p><strong>Masa Berlaku:</strong> {{ \Carbon\Carbon::parse($serviceOrder->warranty->start_date)->translatedFormat('d F Y') }} s/d {{ \Carbon\Carbon::parse($serviceOrder->warranty->end_date)->translatedFormat('d F Y') }}</p>
+            @if($serviceOrder->warranty->terms)
+                <p style="margin-top: 5px;"><strong>Syarat & Ketentuan:</strong></p>
+                <div class="whitespace-pre-wrap">{{ $serviceOrder->warranty->terms }}</div>
+            @endif
+        </div>
+        @endif
+        
+        <div class="footer">
+            Terima kasih telah mempercayakan layanan Anda kepada Pangkalan Komputer ID.
+        </div>
     </div>
 </body>
 </html>

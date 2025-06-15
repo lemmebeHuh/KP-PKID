@@ -1,5 +1,4 @@
 <x-guest-layout>
-    <div class="w-full sm:max-w-md px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-lg">
 
         {{-- Header Form dengan Logo --}}
         <div class="text-center">

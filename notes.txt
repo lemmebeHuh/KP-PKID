@@ -6,3 +6,16 @@ for my laptop
 aksen color : 
 #004aad
 #92dbfb
+
+
+
+note:
+ada yang perlu ditanyakan terkait update servis di tangan teknisi. saat iini teknisi hanya bisa unggah gambar, 
+note dan status. tidak langsung kasih diagnosa dan tanggal selesai.
+
+tapi saya rasa tetap saja seperti itum, karena kontrol harga, detail diagnosa dan tgl selesai ada di tangan admin . teknisi
+ masih bvisa kasih diagnosa di catatan servisnya, yg nanti bisa admin parafrase untuk diinput
+  ke kolom detail diagnosa dan biaya serta lainnya.
+
+
+PDF MASIH EEEROR, ini tinggal ganti folder project

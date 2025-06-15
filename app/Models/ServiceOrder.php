@@ -43,6 +43,8 @@ class ServiceOrder extends Model
         'date_picked_up' => 'datetime',
         'estimated_completion_date' => 'date',
         'final_cost' => 'decimal:2',
+        'assigned_technician_id' => 'integer',
+
     ];
 
     /**

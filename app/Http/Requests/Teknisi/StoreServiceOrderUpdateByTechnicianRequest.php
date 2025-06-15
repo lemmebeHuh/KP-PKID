@@ -31,6 +31,9 @@ class StoreServiceOrderUpdateByTechnicianRequest extends FormRequest
             'update_type' => 'required|string|max:100', // Dari hidden input
             'photos'   => 'nullable|array',
             'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'quotation_details' => 'nullable|string|max:2000',
+            'estimated_completion_date' => 'nullable|date',
+            
         ];
     }
 

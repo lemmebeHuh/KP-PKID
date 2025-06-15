@@ -144,26 +144,16 @@ class DashboardController extends Controller
 
         // Data yang akan dikirim ke view PDF
         $data = [
-            'serviceOrder' => $serviceOrder,
-            'title' => 'Bukti Servis - ' . $serviceOrder->service_order_number,
-            // Anda bisa tambahkan data lain jika perlu, misal info perusahaan
-            'company_name' => 'Pangkalan Komputer ID',
-            'company_address' => 'Jl. Sersan Sodik No.57 RT03, RW.2, Gg. Kelinci VI, Kec. Sukasari, Kota Bandung, Jawa Barat', // Ganti dengan alamat asli
-            'company_phone' => '0895-4157-18458', // Ganti dengan no telp asli
-        ];
+        'serviceOrder' => $serviceOrder,
+        'title' => 'Bukti Servis - ' . $serviceOrder->service_order_number,
+        'company_name' => 'Pangkalan Komputer ID',
+        'company_address' => 'Jl. Sersan Sodik No.57 RT03, RW.2, Gg. Kelinci VI, Kec. Sukasari, Kota Bandung, Jawa Barat', // Ganti dengan alamat asli
+        'company_phone' => '0895-4157-18458',
+    ];
 
-        // Buat nama file PDF
-        $fileName = 'bukti_servis_' . str_replace('-', '_', strtolower($serviceOrder->service_order_number)) . '.pdf';
-
-        // Load view dan data, lalu generate PDF
-        // Kita akan buat view 'pelanggan.service_orders.pdf' nanti
-        $pdf = Pdf::loadView('pelanggan.service_orders.pdf', $data);
-
-        // Kirim PDF sebagai download ke browser
-        return $pdf->download($fileName);
-
-        // Atau jika ingin ditampilkan di browser dulu (inline):
-        // return $pdf->stream($fileName);
+    $fileName = 'bukti_servis_' . str_replace('-', '_', strtolower($serviceOrder->service_order_number)) . '.pdf';
+    $pdf = Pdf::loadView('pelanggan.service_orders.pdf', $data);
+    return $pdf->download($fileName);
     }
 
     public function storeReview(Request $request, ServiceOrder $serviceOrder)
