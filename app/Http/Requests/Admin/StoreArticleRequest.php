@@ -17,7 +17,7 @@ class StoreArticleRequest extends FormRequest
             'content' => 'required|string',
             'excerpt' => 'nullable|string|max:500',
             'status' => 'required|string|in:draft,published',
-            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'author_id' => 'required|exists:users,id',
         ];
     }

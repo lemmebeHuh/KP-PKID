@@ -19,6 +19,7 @@ export default {
              colors: {
                 'primary': '#004aad', // Warna utama Anda
                 'primary-dark': '#003b8a', // Warna hover yang sedikit lebih gelap
+                'primary-light': '#92dbfb',
             },
             keyframes: {
                 'fade-in-up': {

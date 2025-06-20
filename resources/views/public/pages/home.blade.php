@@ -9,7 +9,7 @@
     <div class="relative overflow-hidden bg-gradient-to-r from-gray-900 via-primary-dark to-gray-800 animate-gradient-xy">
         {{-- Elemen Latar Belakang (Opsional) --}}
         <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-gray-900 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gray-500 mix-blend-overlay"></div>
         </div>
 
         {{-- Konten Utama Hero Section --}}
@@ -20,7 +20,7 @@
                 <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-in-up" style="animation-fill-mode: backwards; animation-delay: 0.2s;">
                     Solusi Cerdas, Kinerja Ganas
                 </h1>
-                <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-300 animate-fade-in-up" style="animation-fill-mode: backwards; animation-delay: 0.4s;">
+                <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-300 animate-fade-in-up" style="animation-fill-mode: backwards; animation-delay: 0.1s;">
                     Temukan layanan servis transparan dan produk IT berkualitas yang siap mendukung semua kebutuhan digital Anda.
                 </p>
                 <div class="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center animate-fade-in-up" style="animation-fill-mode: backwards; animation-delay: 0.6s;">
@@ -28,8 +28,8 @@
                         <a href="{{ route('tracking.form') }}" class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark transition-transform transform hover:scale-105">
                             Lacak Servis Anda
                         </a>
-                        <a href="{{ route('products.catalog') }}" class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary bg-indigo-50 hover:bg-indigo-100 transition-transform transform hover:scale-105">
-                            Lihat Katalog Produk
+                        <a href="{{ route('services.catalog') }}" class="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-primary bg-indigo-50 hover:bg-indigo-100 transition-transform transform hover:scale-105">
+                            Lihat Katalog Layanan
                         </a>
                     </div>
                 </div>
