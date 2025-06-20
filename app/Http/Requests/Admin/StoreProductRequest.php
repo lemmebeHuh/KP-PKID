@@ -18,7 +18,7 @@ class StoreProductRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'stock_quantity' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Validasi gambar
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Validasi gambar
             // 'slug' => 'nullable|string|max:255|unique:products,slug', // Jika Anda punya slug
         ];
     }
@@ -41,7 +41,7 @@ class StoreProductRequest extends FormRequest
             'stock_quantity.integer' => 'Stok harus berupa angka bulat.',
             'image.image' => 'File harus berupa gambar.',
             'image.mimes' => 'Format gambar yang diizinkan: jpeg, png, jpg, gif, webp.',
-            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.max' => 'Ukuran gambar maksimal 5MB.',
         ];
     }
 }

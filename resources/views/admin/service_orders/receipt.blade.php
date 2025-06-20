@@ -55,29 +55,36 @@
         </div>
 
         <div class="info-section">
-            <h3>TANDA TERIMA SERVIS</h3>
-            <table>
-                <tr>
-                    <td>No. Servis</td>
-                    <td>: <strong>{{ $serviceOrder->service_order_number }}</strong></td>
-                </tr>
-                <tr>
-                    <td>Tanggal</td>
-                    <td>: {{ $serviceOrder->date_received->translatedFormat('d M Y, H:i') }}</td>
-                </tr>
-                <tr>
-                    <td>Pelanggan</td>
-                    <td>: {{ $serviceOrder->customer->name ?? 'N/A' }}</td>
-                </tr>
-                 <tr>
-                    <td>Perangkat</td>
-                    <td>: {{ $serviceOrder->device_type }}</td>
-                </tr>
-                <tr>
-                    <td>Keluhan</td>
-                    <td>: {{ $serviceOrder->problem_description }}</td>
-                </tr>
-            </table>
+            <h3 style="text-align: center">TANDA TERIMA SERVIS</h3>
+    <table>
+        <tr>
+            <td>No. Servis</td>
+            <td>: <strong>{{ $serviceOrder->service_order_number }}</strong></td>
+        </tr>
+        <tr>
+            <td>Tgl Diterima</td>
+            <td>: {{ $serviceOrder->date_received ? $serviceOrder->date_received->timezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') : '-' }}</td>
+        </tr>
+        {{-- BARIS BARU: Estimasi Selesai --}}
+        <tr>
+            <td>Est. Selesai</td>
+            <td>: {{ $serviceOrder->estimated_completion_date ? \Carbon\Carbon::parse($serviceOrder->estimated_completion_date)->translatedFormat('d F Y') : 'Akan diinfokan' }}</td>
+        </tr>
+        {{-- BARIS BARU: Waktu Cetak Struk --}}
+        
+        <tr>
+            <td>Pelanggan</td>
+            <td>: {{ $serviceOrder->customer->name ?? 'N/A' }}</td>
+        </tr>
+            <tr>
+            <td>Perangkat</td>
+            <td>: {{ $serviceOrder->device_type }}</td>
+        </tr>
+        <tr>
+            <td>Keluhan</td>
+            <td>: {{ $serviceOrder->problem_description }}</td>
+        </tr>
+    </table>
         </div>
 
         <div class="qr-code">
@@ -87,6 +94,12 @@
             @endphp
             {!! QrCode::size(120)->generate($trackingUrl) !!}
             <p style="font-size: 9px; margin-top: 5px;">Scan QR Code di atas</p>
+        </div>
+        <div style="font-size: 8px;text-align: center">
+            <tr>
+                <td>Waktu Cetak</td>
+                <td>: {{ now()->timezone('Asia/Jakarta')->translatedFormat('d M Y, H:i') }}</td>
+            </tr>
         </div>
 
         <div class="footer">

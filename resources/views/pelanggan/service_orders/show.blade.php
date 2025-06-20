@@ -1,3 +1,8 @@
+<style>
+    html {
+  scroll-behavior: smooth;
+}
+</style>
 <x-app-layout>
     <x-slot name="title">{{ 'Detail Servis ' . $serviceOrder->service_order_number }}</x-slot>
 
@@ -278,7 +283,7 @@
                         @endif
                     </div>
                     @else
-                    <form action="{{ route('pelanggan.service-orders.reviews.store', $serviceOrder->id) }}"
+                    <form id="form-ulasan" action="{{ route('pelanggan.service-orders.reviews.store', $serviceOrder->id) }}"
                         method="POST"> {{-- Rute ini akan kita buat --}}
                         @csrf
                         <div class="mb-4">

@@ -30,7 +30,7 @@ class StoreServiceOrderUpdateByTechnicianRequest extends FormRequest
             'new_status' => 'nullable|string|max:100', // Validasi dengan daftar status yang diizinkan untuk Teknisi jika perlu
             'update_type' => 'required|string|max:100', // Dari hidden input
             'photos'   => 'nullable|array',
-            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'quotation_details' => 'nullable|string|max:2000',
             'estimated_completion_date' => 'nullable|date',
             
@@ -43,7 +43,7 @@ class StoreServiceOrderUpdateByTechnicianRequest extends FormRequest
             'notes.required' => 'Catatan update pengerjaan tidak boleh kosong.',
             'photos.*.image' => 'Semua file yang diunggah harus berupa gambar.',
             'photos.*.mimes' => 'Format gambar yang diizinkan: jpeg, png, jpg, gif, webp.',
-            'photos.*.max' => 'Ukuran setiap gambar maksimal 2MB.',
+            'photos.*.max' => 'Ukuran setiap gambar maksimal 10MB.',
         ];
     }
 }

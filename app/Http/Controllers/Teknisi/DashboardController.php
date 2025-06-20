@@ -13,6 +13,7 @@ use App\Notifications\OrderStatusUpdatedNotification;
 use App\Notifications\ServiceStatusUpdated;
 use Illuminate\Support\Facades\Storage;
 
+
 class DashboardController extends Controller
 {
     public function index()
@@ -70,13 +71,12 @@ class DashboardController extends Controller
 
     public function storeServiceUpdate(StoreServiceOrderUpdateByTechnicianRequest $request, ServiceOrder $serviceOrder)
     {
-        // Otorisasi Lapis Kedua: Pastikan lagi teknisi ini yang berhak
+        // Otorisasi: Pastikan lagi teknisi ini yang berhak
         if ($serviceOrder->assigned_technician_id !== Auth::id()) {
             abort(403, 'AKSI TIDAK DIIZINKAN.');
         }
 
         $validatedData = $request->validated();
-        $orderNeedsSaving = false; // Flag untuk melacak jika ada perubahan pada order utama
 
         // 1. Buat Log Update di tabel service_order_updates
         $newUpdate = $serviceOrder->updates()->create([
@@ -92,14 +92,14 @@ class DashboardController extends Controller
             foreach ($request->file('photos') as $photoFile) {
                 $path = $photoFile->store('service_orders/' . $serviceOrder->id, 'public');
                 $newUpdate->photos()->create([
-                    'file_path' => $path,
+                    'file_path'      => $path,
                     'uploaded_by_id' => Auth::id(),
                 ]);
             }
         }
 
-        // 3. Update data di tabel service_orders utama secara eksplisit
-        //    Ini adalah cara yang paling andal untuk memastikan data tersimpan.
+        // 3. Siapkan data untuk diupdate ke tabel service_orders utama
+        $orderNeedsSaving = false;
 
         // Update status utama jika ada perubahan
         if (!empty($validatedData['new_status']) && $serviceOrder->status !== $validatedData['new_status']) {
@@ -127,6 +127,17 @@ class DashboardController extends Controller
         // Hanya jalankan proses save() jika ada perubahan pada order utama
         if ($orderNeedsSaving) {
             $serviceOrder->save();
+        }
+        
+        // ====================================================================
+        // !! BAGIAN PENGIRIMAN NOTIFIKASI YANG HILANG ADA DI SINI !!
+        // ====================================================================
+        // Cek apakah status pada order utama benar-benar berubah sebelum mengirim notifikasi
+        if ($serviceOrder->wasChanged('status')) {
+            $customer = $serviceOrder->customer;
+            if ($customer) {
+                $customer->notify(new OrderStatusUpdatedNotification($serviceOrder));
+            }
         }
         
         return redirect()->route('teknisi.service-orders.show', $serviceOrder->id)
