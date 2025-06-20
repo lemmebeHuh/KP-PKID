@@ -106,6 +106,9 @@
                                                 <x-slot name="content">
                                                     <x-dropdown-link :href="route('admin.service-orders.show', $order->id)">Lihat Detail</x-dropdown-link>
                                                     <x-dropdown-link :href="route('admin.service-orders.edit', $order->id)">Edit / Update</x-dropdown-link>
+                                                    <a href="{{ route('admin.service-orders.print-receipt', $order->id) }}" target="_blank" class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 transition duration-150 ease-in-out">
+                                                        Cetak Karcis
+                                                    </a>
 
                                                     @if ($order->customer && $order->customer->phone_number)
                                                         @php

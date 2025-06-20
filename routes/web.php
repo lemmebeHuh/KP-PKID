@@ -94,6 +94,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/service-orders/{serviceOrder}/updates', [ServiceOrderController::class, 'storeUpdate'])
         ->name('service-orders.updates.store');
 
+        Route::get('/service-orders/{serviceOrder}/print-receipt', [ServiceOrderController::class, 'printReceipt'])
+             ->name('service-orders.print-receipt'); 
+
         Route::resource('reviews', ReviewController::class)->except(['create', 'store']);
         Route::resource('complaints', ComplaintController::class)->except(['create', 'store']); 
     });

@@ -352,4 +352,12 @@ class ServiceOrderController extends Controller
     return redirect()->route('admin.service-orders.show', $serviceOrder->id)
                      ->with('success', 'Update progres berhasil ditambahkan!');
     }
+
+    public function printReceipt(ServiceOrder $serviceOrder)
+    {
+        // Eager load relasi customer jika dibutuhkan
+        $serviceOrder->load('customer');
+
+        return view('admin.service_orders.receipt', compact('serviceOrder'));
+    }
 }
