@@ -12,6 +12,8 @@ use App\Http\Requests\Teknisi\StoreServiceOrderUpdateByTechnicianRequest; // <--
 use App\Notifications\OrderStatusUpdatedNotification;
 use App\Notifications\ServiceStatusUpdated;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
+use App\Notifications\TechnicianUpdatedStatus;
 
 
 class DashboardController extends Controller
@@ -138,6 +140,16 @@ class DashboardController extends Controller
             if ($customer) {
                 $customer->notify(new OrderStatusUpdatedNotification($serviceOrder));
             }
+        }
+        $admins = User::whereHas('role', function ($query) {
+            $query->where('name', 'Admin');
+        })->get();
+
+        $technician = Auth::user(); // Dapatkan data teknisi yang sedang login
+
+        foreach ($admins as $admin) {
+            // Kirim notifikasi baru ke setiap admin
+            $admin->notify(new TechnicianUpdatedStatus($serviceOrder, $technician));
         }
         
         return redirect()->route('teknisi.service-orders.show', $serviceOrder->id)

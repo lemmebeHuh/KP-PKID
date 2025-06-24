@@ -16,7 +16,7 @@ export default defineConfig({
         host: '0.0.0.0', // Memberitahu Vite untuk listen di semua network interfaces
         cors: true,
         hmr: {
-            host: '192.168.43.151', // Untuk Hot Module Replacement di komputer lokal Anda
+            host: '192.168.43.111', // Untuk Hot Module Replacement di komputer lokal Anda
         }
     },
-});
+}); 

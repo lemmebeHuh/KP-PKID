@@ -75,6 +75,7 @@ Route::post('/kontak-kami/kirim', [PageController::class, 'sendContactMessage'])
 Route::middleware(['auth', 'verified'])->group(function () {
      Route::get('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
      Route::get('/semua-notifikasi', [NotificationController::class, 'index'])->name('notifications.index'); // Halaman semua notifikasi
+     Route::get('/notifikasi/{notification}', [NotificationController::class, 'readAndRedirect'])->name('notifications.read');
      
     // ... (rute profile dan dashboard pelanggan/teknisi) ...
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

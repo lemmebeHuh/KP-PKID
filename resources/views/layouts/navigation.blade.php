@@ -118,7 +118,7 @@
                         }
                     @endphp
 
-                    <a href="{{ $notification->data['url'] ?? '#' }}" 
+                    <a href="{{ route('notifications.read', $notification->id) }}" 
                        class="flex items-start px-4 py-3 hover:bg-gray-100 {{ $notification->read_at ? 'text-gray-500' : 'font-bold bg-blue-50 text-gray-800' }}">
                         <div class="flex-shrink-0">
                             <svg class="h-6 w-6 {{ $iconClass }}" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -135,7 +135,6 @@
                 @endforelse
             </div>
             <div class="px-4 py-2 text-xs text-center border-t">
-                <a href="#" class="text-indigo-600 hover:underline">Lihat Semua Notifikasi</a>
             </div>
         </x-slot>
     </x-dropdown>

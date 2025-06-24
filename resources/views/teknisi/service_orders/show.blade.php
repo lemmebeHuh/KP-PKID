@@ -122,7 +122,7 @@
                             <input type="hidden" name="update_type" value="Update Teknisi">
 
                             <div>
-                                <button type="submit" class="bg-sky-500 ...">
+                                <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded-lg">
                                     Simpan Update Progres
                                 </button>
                             </div>

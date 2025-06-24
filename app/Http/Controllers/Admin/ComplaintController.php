@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Complaint;
+use App\Notifications\ComplaintStatusUpdated;
 use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
@@ -59,6 +60,10 @@ class ComplaintController extends Controller
         ]);
 
         $complaint->update($validatedData);
+        
+        if ($complaint->customer) {
+            $complaint->customer->notify(new ComplaintStatusUpdated($complaint));
+        }
 
         return redirect()->route('admin.complaints.index')
                          ->with('success', 'Status komplain berhasil diperbarui.');
