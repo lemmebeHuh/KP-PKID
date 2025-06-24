@@ -169,9 +169,7 @@
                     </div>
                     
                      </div>
-                     <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
                      
-                </div>
                     </div>
 
 

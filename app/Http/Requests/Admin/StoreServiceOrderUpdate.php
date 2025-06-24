@@ -20,7 +20,7 @@ class StoreServiceOrderUpdate extends FormRequest
             'new_status' => 'nullable|string|max:100', // Validasi dengan daftar status yang ada jika perlu
             'update_type' => 'required|string|max:100',
             'photos'   => 'nullable|array', // Memastikan photos adalah array (untuk multiple files)
-            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Validasi setiap file
+            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480', // Validasi setiap file
         ];
     }
 
@@ -30,7 +30,7 @@ class StoreServiceOrderUpdate extends FormRequest
             'notes.required' => 'Catatan update tidak boleh kosong.',
             'photos.*.image' => 'Semua file yang diunggah harus berupa gambar.',
             'photos.*.mimes' => 'Format gambar yang diizinkan: jpeg, png, jpg, gif, webp.',
-            'photos.*.max' => 'Ukuran setiap gambar maksimal 2MB.',
+            'photos.*.max' => 'Ukuran setiap gambar maksimal 20MB.',
         ];
     }
 }

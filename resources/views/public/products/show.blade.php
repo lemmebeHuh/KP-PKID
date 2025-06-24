@@ -27,8 +27,7 @@
                     @endif
                 </div>
                 {{-- Thumbnail (jika ada lebih dari 1 gambar nanti) --}}
-                <div class="mt-4 grid grid-cols-5 gap-4">
-                    {{-- Contoh Thumbnail Aktif --}}
+                {{-- <div class="mt-4 grid grid-cols-5 gap-4">
                     <div class="aspect-w-1 aspect-h-1 w-full rounded-md border-2 border-primary overflow-hidden">
                         @if ($product->image_path && Storage::disk('public')->exists($product->image_path))
                             <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" class="h-full w-full object-contain object-center">
@@ -36,8 +35,7 @@
                             <img src="https://via.placeholder.com/100x100.png?text=1" alt="{{ $product->name }}" class="h-full w-full object-contain object-center">
                         @endif
                     </div>
-                    {{-- Placeholder untuk thumbnail lainnya nanti --}}
-                </div>
+                </div> --}}
             </div>
 
             {{-- Kolom Kanan: Informasi & Aksi --}}

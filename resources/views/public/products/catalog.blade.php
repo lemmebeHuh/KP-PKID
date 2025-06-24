@@ -102,21 +102,27 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                         @foreach ($products as $product)
                         <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out flex flex-col">
-                            <a href="{{ route('products.show-public', $product->slug) }}">
-                                <div class="aspect-w-1 aspect-h-1 w-full bg-gray-200 rounded-t-lg overflow-hidden">
-                                @if ($product->image_path && Storage::disk('public')->exists($product->image_path))
-                                    <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" class="w-full h-full object-cover object-center transition duration-300 ease-in-out transform scale-100 group-hover:scale-105">
-                                @else
-                                    <img src="https://via.placeholder.com/300x300.png?text={{ urlencode($product->name) }}" alt="{{ $product->name }}" class="w-full h-full object-cover object-center">
-                                @endif
-                                </div>
-                            </a>
+                            <div class="w-full bg-gray-100 rounded-t-lg overflow-hidden aspect-[3/4]">
+                                <a href="{{ route('products.show-public', $product->slug) }}">
+                                    <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : 'https://via.placeholder.com/300x400.png?text=' . urlencode($product->name) }}" 
+                                        alt="{{ $product->name }}" 
+                                        class="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-300">
+                                </a>
+                            </div>
                             <div class="p-4 flex-grow flex flex-col">
-                                <h3 class="text-md font-semibold text-gray-800" style="min-height: 2.5rem;"><a href="{{ route('products.show-public', $product->slug) }}" class="hover:text-primary">{{ Str::limit($product->name, 40) }}</a></h3>
-                                @if($product->category)<p class="text-xs text-gray-500 mb-2">{{ $product->category->name }}</p>@endif
+                                <h3 class="text-md font-semibold text-gray-800" style="min-height: 2.5rem;">
+                                    <a href="{{ route('products.show-public', $product->slug) }}" class="hover:text-primary">
+                                        {{ Str::limit($product->name, 40) }}
+                                    </a>
+                                </h3>
+                                @if($product->category)
+                                    <p class="text-xs text-gray-500 mb-2">{{ $product->category->name }}</p>
+                                @endif
                                 <div class="mt-auto">
                                     <p class="text-lg font-bold text-primary mb-3">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                                    <a href="{{ route('products.show-public', $product->slug) }}" class="block w-full text-center bg-primary text-white py-2 rounded-md hover:bg-primary text-sm font-medium">Lihat Detail</a>
+                                    <a href="{{ route('products.show-public', $product->slug) }}" class="block w-full text-center bg-primary bg-opacity-90 text-white py-2 rounded-md hover:bg-opacity-100 text-sm font-medium">
+                                        Lihat Detail
+                                    </a>
                                 </div>
                             </div>
                         </div>

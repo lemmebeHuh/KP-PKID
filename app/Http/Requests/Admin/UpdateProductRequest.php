@@ -22,7 +22,7 @@ class UpdateProductRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'stock_quantity' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // Gambar opsional saat update
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480', // Gambar opsional saat update
             // 'slug' => ['nullable', 'string', 'max:255', Rule::unique('products', 'slug')->ignore($productId)], // Jika ada slug
         ];
     }

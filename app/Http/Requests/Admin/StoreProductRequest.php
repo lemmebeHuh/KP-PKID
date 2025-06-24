@@ -18,7 +18,7 @@ class StoreProductRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'stock_quantity' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120', // Validasi gambar
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:20480', // Validasi gambar
             // 'slug' => 'nullable|string|max:255|unique:products,slug', // Jika Anda punya slug
         ];
     }
